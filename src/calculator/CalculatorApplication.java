@@ -8,6 +8,8 @@
 
 package calculator;
 
+import java.awt.Frame;
+
 /**
  * This class represents the model in the MVC architecture for a calculator application.
  * It handles all the functional operations and calculations.
@@ -35,13 +37,18 @@ class CalculatorModel {
  * @since 12 Aug 2023
  *
  */
-class CalculatorView {
-	
+class CalculatorView extends Frame {
+
+	private static final long serialVersionUID = 1L;
+
 	/**
      * Constructs a new CalculatorModel instance.
      * This constructor initializes any required data or resources.
      */
-	public CalculatorView() {}
+	public CalculatorView() {
+		this.setSize(400, 350);
+		this.setVisible(true);
+	}
 }
 
 /**
