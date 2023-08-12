@@ -1,6 +1,7 @@
 package calculator;
 
 import java.awt.Font;
+import java.awt.Color;
 import java.awt.Frame;
 import java.awt.Panel;
 import java.awt.TextField;
@@ -47,6 +48,7 @@ public class CalculatorView extends Frame implements Keypad {
 		// Setting Frame properties
 		this.setSize(400, 600);
 		this.setVisible(true);
+		this.setBackground(new Color(24, 24, 24));
 	}
 	
 	/**
@@ -76,6 +78,9 @@ public class CalculatorView extends Frame implements Keypad {
 		
 		// Setting global font to the component
 		component.setFont(this.globalFont);
+		
+		// Setting background color
+		component.setBackground(new Color(40, 40, 40));
 		
 		// Adding the component to the view (or) main Frame window
 		this.add(component, this.gridBagConstraints);
