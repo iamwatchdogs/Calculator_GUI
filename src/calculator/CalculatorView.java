@@ -6,8 +6,10 @@ import java.awt.Frame;
 import java.awt.Panel;
 import java.awt.Insets;
 import java.awt.TextField;
+import java.awt.Toolkit;
 import java.awt.Component;
 import java.awt.GridBagLayout;
+import java.awt.Image;
 import java.awt.GridBagConstraints;
 
 /**
@@ -26,6 +28,7 @@ public class CalculatorView extends Frame implements Keypad {
 	private final GridBagConstraints gridBagConstraints;
 	private final TextField textField;
 	private final Font globalFont;
+	private final Image icon;
 
 	/**
 	 * Constructs a new CalculatorModel instance.
@@ -38,6 +41,7 @@ public class CalculatorView extends Frame implements Keypad {
 		this.gridBagConstraints = new GridBagConstraints();
 		this.textField = new TextField();
 		this.globalFont = new Font("Arial", Font.PLAIN, 30);
+		this.icon = Toolkit.getDefaultToolkit().getImage(System.getProperty("user.dir") + "\\src\\calculator\\images\\icon.png");
 		
 		// Setting GridBag Layout
 		this.setLayout(new GridBagLayout());
@@ -50,6 +54,9 @@ public class CalculatorView extends Frame implements Keypad {
 		this.setSize(400, 600);
 		this.setVisible(true);
 		this.setBackground(new Color(24, 24, 24));
+		this.setTitle("Calculator");
+		this.setIconImage(icon);
+		this.setResizable(false);
 	}
 	
 	/**
