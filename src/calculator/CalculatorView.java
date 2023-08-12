@@ -2,16 +2,16 @@ package calculator;
 
 import java.awt.Font;
 import java.awt.Color;
+import java.awt.Image;
+import java.awt.Toolkit;
+import java.awt.Insets;
 import java.awt.Frame;
 import java.awt.Panel;
-import java.awt.Image;
-import java.awt.Insets;
 import java.awt.Button;
 import java.awt.TextField;
-import java.awt.Toolkit;
 import java.awt.Component;
-import java.awt.GridBagLayout;
 import java.awt.GridLayout;
+import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 
 /**
@@ -70,11 +70,11 @@ public class CalculatorView extends Frame implements Keypad {
 	/**
 	 * This function adds components to the main Frame window w.r.t provided constraint values.
 	 * 
-	 * @param component : an object of java.awt.Component
+	 * @param component : java.awt.Component object
 	 * @param gridx : x value on grid
 	 * @param gridy : y value on grid
 	 * @param weightx : weight value of x-coordinate on grid
-	 * @param weighty  : weight value of y-coordinate on grid
+	 * @param weighty : weight value of y-coordinate on grid
 	 * @param padding : array of padding value (Top, Left, Bottom, Right)
 	 * 
 	 * @return void
@@ -133,7 +133,7 @@ interface Keypad {
 	 * 
 	 * @param No Parameter required
 	 * 
-	 * @return keypad : java.awt.Panel object
+	 * @return keypad[java.awt.Panel] : Panel object
 	 * 
 	 */
 	default Panel createKeypad() {
