@@ -3,7 +3,6 @@ package calculator;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
-
 /**
  * This class represents the controller in the MVC architecture for a calculator application.
  * It handles all the listener event from view and perform operation using model.

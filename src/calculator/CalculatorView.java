@@ -48,6 +48,9 @@ public class CalculatorView extends Frame implements Keypad {
 		this.globalFont = new Font("Arial", Font.PLAIN, 30);
 		this.icon = Toolkit.getDefaultToolkit().getImage(iconLocation);
 		
+		// Setting Names to the component
+		this.textField.setName("Textfield");
+		
 		// Setting GridBag Layout
 		this.setLayout(new GridBagLayout());
 		
@@ -137,6 +140,7 @@ interface Keypad {
 		
 		// Initialization
 		Panel keypad = new Panel();
+		keypad.setName("Keypad");
 		
 		// Setting Grid Layout
 		keypad.setLayout(new GridLayout(5,4));
@@ -146,6 +150,7 @@ interface Keypad {
 			Button button = new Button(buttonName);
 			button.setBackground(new Color(64,64,64));		// Setting Background Color
 			button.setForeground(new Color(255,255,255));	// Setting Font(Foreground) color
+			button.setName(buttonName);
 			keypad.add(button);
 		}
 		
