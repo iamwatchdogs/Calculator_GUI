@@ -9,6 +9,8 @@
 package calculator;
 
 import java.awt.Frame;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 /**
  * This class represents the model in the MVC architecture for a calculator application.
@@ -74,7 +76,16 @@ class CalculatorController {
      * Constructs a new CalculatorModel instance.
      * This constructor initializes with provided data or resources.
      */
-	public CalculatorController(CalculatorView view, CalculatorModel model){}
+	public CalculatorController(CalculatorView view, CalculatorModel model){
+		
+		// windows listener to close the application
+		view.addWindowListener( new WindowAdapter() {
+			@Override
+			public void windowClosing(WindowEvent e) {
+				view.dispose();
+			}
+		});
+	}
 }
 
 /**
