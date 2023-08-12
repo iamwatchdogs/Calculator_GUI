@@ -24,9 +24,9 @@ public class CalculatorView extends Frame implements Keypad {
 	private final TextField textField;
 
 	/**
-     * Constructs a new CalculatorModel instance.
-     * This constructor initializes any required data or resources.
-     */
+	 * Constructs a new CalculatorModel instance.
+	 * This constructor initializes any required data or resources.
+	 */
 	public CalculatorView() {
 		
 		// Initialization
@@ -54,6 +54,8 @@ public class CalculatorView extends Frame implements Keypad {
 	 * @param gridy : y value on grid
 	 * @param weightx : weight value of x-coordinate on grid
 	 * @param weighty  : weight value of y-coordinate on grid
+	 * 
+	 * @return void
 	 * 
 	 */
 	private void addComponentsToView(Component comp, int gridx, int gridy,  int weightx, int weighty) {
@@ -85,9 +87,19 @@ public class CalculatorView extends Frame implements Keypad {
  */
 interface Keypad {
 	
+	public final String [] BUTTON_LABLES = {
+			"%", "/", "C", "<-",
+			"7", "8", "9", "*",
+			"4", "5", "6", "-",
+			"1", "2", "3", "+",
+			"+/-", "0", ".", "="
+	   };
+	
 	/**
 	 * This function returns a java.awt.Panel object that contains
 	 * all the buttons required for a simple calculator.
+	 * 
+	 * @param No Parameter required
 	 * 
 	 * @return keypad : java.awt.Panel object
 	 * 
