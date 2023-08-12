@@ -38,19 +38,22 @@ public class CalculatorView extends Frame implements Keypad {
 	 */
 	public CalculatorView() {
 		
+		// Getting Icon Location
+		String iconLocation = System.getProperty("user.dir").concat("\\src\\calculator\\images\\icon.png");
+		
 		// Initialization
 		this.keypad = createKeypad();
 		this.gridBagConstraints = new GridBagConstraints();
 		this.textField = new TextField();
 		this.globalFont = new Font("Arial", Font.PLAIN, 30);
-		this.icon = Toolkit.getDefaultToolkit().getImage(System.getProperty("user.dir") + "\\src\\calculator\\images\\icon.png");
+		this.icon = Toolkit.getDefaultToolkit().getImage(iconLocation);
 		
 		// Setting GridBag Layout
 		this.setLayout(new GridBagLayout());
 		
 		// Adding Components
-		this.addComponentsToView(this.textField, 0, 0, 1, 1, new int[]{20, 10, 5, 10});
-		this.addComponentsToView(this.keypad, 0, 1, 1, 10, new int[]{5, 10, 20, 10});
+		this.addComponentsToView(this.textField, 0, 0, 1, 1, new int[]{20, 20, 10, 20});
+		this.addComponentsToView(this.keypad, 0, 1, 1, 2, new int[]{10, 20, 20, 20});
         
 		// Setting Frame properties
 		this.setSize(400, 600);
@@ -93,8 +96,9 @@ public class CalculatorView extends Frame implements Keypad {
 		// Setting global font to the component
 		component.setFont(this.globalFont);
 		
-		// Setting background color
+		// Setting background and foreground color
 		component.setBackground(new Color(40, 40, 40));
+		component.setForeground(new Color(255, 255, 255));
 		
 		// Adding the component to the view (or) main Frame window
 		this.add(component, this.gridBagConstraints);
@@ -113,7 +117,7 @@ public class CalculatorView extends Frame implements Keypad {
 interface Keypad {
 	
 	public final String [] BUTTON_LABLES = {
-			"%", "/", "C", "<-",
+			"%", "/", "C", "BS",
 			"7", "8", "9", "*",
 			"4", "5", "6", "-",
 			"1", "2", "3", "+",
