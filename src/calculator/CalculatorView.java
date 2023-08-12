@@ -4,6 +4,7 @@ import java.awt.Font;
 import java.awt.Color;
 import java.awt.Frame;
 import java.awt.Panel;
+import java.awt.Insets;
 import java.awt.TextField;
 import java.awt.Component;
 import java.awt.GridBagLayout;
@@ -42,8 +43,8 @@ public class CalculatorView extends Frame implements Keypad {
 		this.setLayout(new GridBagLayout());
 		
 		// Adding Components
-		this.addComponentsToView(this.textField, 0, 0, 1, 1);
-		this.addComponentsToView(this.keypad, 0, 1, 1, 10);
+		this.addComponentsToView(this.textField, 0, 0, 1, 1, new int[]{20, 10, 5, 10});
+		this.addComponentsToView(this.keypad, 0, 1, 1, 10, new int[]{5, 10, 20, 10});
         
 		// Setting Frame properties
 		this.setSize(400, 600);
@@ -59,11 +60,12 @@ public class CalculatorView extends Frame implements Keypad {
 	 * @param gridy : y value on grid
 	 * @param weightx : weight value of x-coordinate on grid
 	 * @param weighty  : weight value of y-coordinate on grid
+	 * @param padding : array of padding value (Top, Left, Bottom, Right)
 	 * 
 	 * @return void
 	 * 
 	 */
-	private void addComponentsToView(Component component, int gridx, int gridy,  int weightx, int weighty) {
+	private void addComponentsToView(Component component, int gridx, int gridy,  int weightx, int weighty, int [] padding) {
 		
 		// Setting component's grid coordinates
 		this.gridBagConstraints.gridx = gridx;
@@ -75,6 +77,9 @@ public class CalculatorView extends Frame implements Keypad {
 		
 		// Setting the fill constraint to fill both directions
 		this.gridBagConstraints.fill = GridBagConstraints.BOTH;
+		
+		// Setting Padding to the component
+		this.gridBagConstraints.insets = new Insets(padding[0], padding[1], padding[2], padding[3]);
 		
 		// Setting global font to the component
 		component.setFont(this.globalFont);
