@@ -4,12 +4,14 @@ import java.awt.Font;
 import java.awt.Color;
 import java.awt.Frame;
 import java.awt.Panel;
+import java.awt.Image;
 import java.awt.Insets;
+import java.awt.Button;
 import java.awt.TextField;
 import java.awt.Toolkit;
 import java.awt.Component;
 import java.awt.GridBagLayout;
-import java.awt.Image;
+import java.awt.GridLayout;
 import java.awt.GridBagConstraints;
 
 /**
@@ -128,7 +130,21 @@ interface Keypad {
 	 * 
 	 */
 	default Panel createKeypad() {
+		
+		// Initialization
 		Panel keypad = new Panel();
+		
+		// Setting Grid Layout
+		keypad.setLayout(new GridLayout(5,4));
+		
+		// Adding buttons to the keypad Panel
+		for(String buttonName: BUTTON_LABLES) {
+			Button button = new Button(buttonName);
+			button.setBackground(new Color(64,64,64));		// Setting Background Color
+			button.setForeground(new Color(255,255,255));	// Setting Font(Foreground) color
+			keypad.add(button);
+		}
+		
 		return keypad;
 	}
 }
