@@ -16,17 +16,17 @@ import java.awt.event.WindowEvent;
 public class CalculatorController {
 	
 	/**
-     * Constructs a new CalculatorModel instance.
-     * This constructor initializes any required data or resources.
-     */
+	 * Constructs a new CalculatorModel instance.
+	 * This constructor initializes any required data or resources.
+	 */
 	public CalculatorController(){
 		this(new CalculatorView(), new CalculatorModel());
 	}
 	
 	/**
-     * Constructs a new CalculatorModel instance.
-     * This constructor initializes with provided data or resources.
-     */
+	 * Constructs a new CalculatorModel instance.
+	 * This constructor initializes with provided data or resources.
+	 */
 	public CalculatorController(CalculatorView view, CalculatorModel model){
 		
 		// windows listener to close the application

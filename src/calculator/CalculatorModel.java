@@ -12,8 +12,8 @@ package calculator;
 public class CalculatorModel {
 	
 	/**
-     * Constructs a new CalculatorModel instance.
-     * This constructor initializes any required data or resources.
-     */
+	 * Constructs a new CalculatorModel instance.
+	 * This constructor initializes any required data or resources.
+	 */
 	public CalculatorModel() {}
 }

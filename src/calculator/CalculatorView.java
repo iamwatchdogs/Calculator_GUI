@@ -1,5 +1,6 @@
 package calculator;
 
+import java.awt.Font;
 import java.awt.Frame;
 import java.awt.Panel;
 import java.awt.TextField;
@@ -22,6 +23,7 @@ public class CalculatorView extends Frame implements Keypad {
 	private final Panel keypad;
 	private final GridBagConstraints gridBagConstraints;
 	private final TextField textField;
+	private final Font globalFont;
 
 	/**
 	 * Constructs a new CalculatorModel instance.
@@ -33,6 +35,7 @@ public class CalculatorView extends Frame implements Keypad {
 		this.keypad = createKeypad();
 		this.gridBagConstraints = new GridBagConstraints();
 		this.textField = new TextField();
+		this.globalFont = new Font("Arial", Font.PLAIN, 30);
 		
 		// Setting GridBag Layout
 		this.setLayout(new GridBagLayout());
@@ -49,7 +52,7 @@ public class CalculatorView extends Frame implements Keypad {
 	/**
 	 * This function adds components to the main Frame window w.r.t provided constraint values.
 	 * 
-	 * @param comp : an object of java.awt.Component
+	 * @param component : an object of java.awt.Component
 	 * @param gridx : x value on grid
 	 * @param gridy : y value on grid
 	 * @param weightx : weight value of x-coordinate on grid
@@ -58,7 +61,7 @@ public class CalculatorView extends Frame implements Keypad {
 	 * @return void
 	 * 
 	 */
-	private void addComponentsToView(Component comp, int gridx, int gridy,  int weightx, int weighty) {
+	private void addComponentsToView(Component component, int gridx, int gridy,  int weightx, int weighty) {
 		
 		// Setting component's grid coordinates
 		this.gridBagConstraints.gridx = gridx;
@@ -71,8 +74,11 @@ public class CalculatorView extends Frame implements Keypad {
 		// Setting the fill constraint to fill both directions
 		this.gridBagConstraints.fill = GridBagConstraints.BOTH;
 		
+		// Setting global font to the component
+		component.setFont(this.globalFont);
+		
 		// Adding the component to the view (or) main Frame window
-		this.add(comp, this.gridBagConstraints);
+		this.add(component, this.gridBagConstraints);
 	}
 	
 }
