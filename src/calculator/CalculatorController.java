@@ -69,15 +69,18 @@ public class CalculatorController implements TextListener, ActionListener{
 		// Type-casted the event source into triggering Button object
 		Button clickedButton = (Button)e.getSource();
 		
-		// Regex pattern checking
-		Pattern pattern = Pattern.compile("^C|BS|=|\\+/\\-*$");
-		Matcher matcher = pattern.matcher(clickedButton.getLabel());
+		// Setting up regex parameters
+		String regex = "^C|BS|=|\\+/\\-*$";
+		String label = clickedButton.getLabel();
+		
+		// Evaluating regex
+		boolean shouldPerformOperation = CalculatorModel.matchesRegex(regex, label);
 		
 		// Performing respective operation
-		if(matcher.find()) {
+		if(shouldPerformOperation) {
 			// Performs operation w.r.t input
 		} else {
-			this.textFieldCurrentText.append(clickedButton.getLabel());
+			this.textFieldCurrentText.append(label);
 			this.view.textField.setText(this.textFieldCurrentText.toString());
 		}
 	}
@@ -92,14 +95,16 @@ public class CalculatorController implements TextListener, ActionListener{
 		
 		// Initialization
 		TextField textField = this.view.textField;
+		
+		// Setting up regex parameters
+		String regex = "^[\\d\\+\\-\\*/%\\.]*$";
 		String newInputText = textField.getText();
 		
-		// Regex pattern checking
-		Pattern pattern = Pattern.compile("^[\\d\\+\\-\\*/%\\.]*$");
-		Matcher matcher = pattern.matcher(newInputText);
+		// Evaluating regex
+		boolean shouldUpdateCurrentText = CalculatorModel.matchesRegex(regex, newInputText);
 		
 		// Performing respective operation
-		if(matcher.find()) {
+		if(shouldUpdateCurrentText) {
 			this.textFieldCurrentText.replace(0, this.textFieldCurrentText.length(), newInputText);
 		} else if(!newInputText.equals(textFieldCurrentText.toString())) {
 			textField.setText(textFieldCurrentText.toString());
