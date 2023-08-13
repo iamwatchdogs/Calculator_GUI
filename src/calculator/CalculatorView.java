@@ -26,11 +26,11 @@ import java.awt.GridBagConstraints;
 @SuppressWarnings("serial")
 public class CalculatorView extends Frame implements Keypad {
 	
-	private final Panel keypad;
-	private final GridBagConstraints gridBagConstraints;
-	private final TextField textField;
+	protected final Panel keypad;
+	protected final TextField textField;
 	private final Font globalFont;
 	private final Image icon;
+	
 
 	/**
 	 * Constructs a new CalculatorModel instance.
@@ -43,7 +43,6 @@ public class CalculatorView extends Frame implements Keypad {
 		
 		// Initialization
 		this.keypad = createKeypad();
-		this.gridBagConstraints = new GridBagConstraints();
 		this.textField = new TextField();
 		this.globalFont = new Font("Arial", Font.PLAIN, 30);
 		this.icon = Toolkit.getDefaultToolkit().getImage(iconLocation);
@@ -81,20 +80,21 @@ public class CalculatorView extends Frame implements Keypad {
 	 * 
 	 */
 	private void addComponentsToView(Component component, int gridx, int gridy,  int weightx, int weighty, int [] padding) {
+		GridBagConstraints gridBagConstraints = new GridBagConstraints();
 		
 		// Setting component's grid coordinates
-		this.gridBagConstraints.gridx = gridx;
-		this.gridBagConstraints.gridy = gridy;
+		gridBagConstraints.gridx = gridx;
+		gridBagConstraints.gridy = gridy;
 		
 		// Setting component's weights
-		this.gridBagConstraints.weightx = weightx;
-		this.gridBagConstraints.weighty = weighty;
+		gridBagConstraints.weightx = weightx;
+		gridBagConstraints.weighty = weighty;
 		
 		// Setting the fill constraint to fill both directions
-		this.gridBagConstraints.fill = GridBagConstraints.BOTH;
+		gridBagConstraints.fill = GridBagConstraints.BOTH;
 		
 		// Setting Padding to the component
-		this.gridBagConstraints.insets = new Insets(padding[0], padding[1], padding[2], padding[3]);
+		gridBagConstraints.insets = new Insets(padding[0], padding[1], padding[2], padding[3]);
 		
 		// Setting global font to the component
 		component.setFont(this.globalFont);
@@ -104,7 +104,7 @@ public class CalculatorView extends Frame implements Keypad {
 		component.setForeground(new Color(255, 255, 255));
 		
 		// Adding the component to the view (or) main Frame window
-		this.add(component, this.gridBagConstraints);
+		this.add(component, gridBagConstraints);
 	}
 	
 }
