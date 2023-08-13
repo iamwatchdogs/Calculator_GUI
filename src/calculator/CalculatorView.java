@@ -38,14 +38,11 @@ public class CalculatorView extends Frame implements Keypad {
 	 */
 	public CalculatorView() {
 		
-		// Getting Icon Location
-		String iconLocation = System.getProperty("user.dir").concat("\\src\\calculator\\images\\icon.png");
-		
 		// Initialization
 		this.keypad = createKeypad();
 		this.textField = new TextField();
 		this.globalFont = new Font("Arial", Font.PLAIN, 30);
-		this.icon = Toolkit.getDefaultToolkit().getImage(iconLocation);
+		this.icon = Toolkit.getDefaultToolkit().getImage(this.getIconLocation());
 		
 		// Setting Names to the component
 		this.textField.setName("Textfield");
@@ -80,6 +77,8 @@ public class CalculatorView extends Frame implements Keypad {
 	 * 
 	 */
 	private void addComponentsToView(Component component, int gridx, int gridy,  int weightx, int weighty, int [] padding) {
+		
+		// Initialization
 		GridBagConstraints gridBagConstraints = new GridBagConstraints();
 		
 		// Setting component's grid coordinates
@@ -105,6 +104,19 @@ public class CalculatorView extends Frame implements Keypad {
 		
 		// Adding the component to the view (or) main Frame window
 		this.add(component, gridBagConstraints);
+	}
+	
+	/**
+	 * Returns the absolute path to icon
+	 * 
+	 * @param Not Required
+	 * 
+	 * @return absolutePathToIcon[String]
+	 */
+	private String getIconLocation() {
+		String relativePathToIcon = "\\src\\calculator\\images\\icon.png";						// Setting Relative Path to icon
+		String absolutePathToIcon = System.getProperty("user.dir").concat(relativePathToIcon);	// Converting into absolute path
+		return absolutePathToIcon;
 	}
 	
 }
