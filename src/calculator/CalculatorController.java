@@ -1,5 +1,6 @@
 package calculator;
 
+import java.awt.TextField;
 import java.awt.Button;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -7,6 +8,8 @@ import java.awt.event.TextEvent;
 import java.awt.event.TextListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * This class represents the controller in the MVC architecture for a calculator application.
@@ -22,6 +25,7 @@ public class CalculatorController implements TextListener, ActionListener{
 	// Saving their references to increase their scope for other methods
 	private final CalculatorModel model;
 	private final CalculatorView view;
+	private String textFieldCurrentText;
 	
 	/**
 	 * Constructs a new CalculatorModel instance.
@@ -40,6 +44,7 @@ public class CalculatorController implements TextListener, ActionListener{
 		// Initialization
 		this.model = model;
 		this.view = view;
+		this.textFieldCurrentText = "";
 		
 		// Register the components with the listener.
 		model.getAllChildren(view.keypad).forEach((button)->{
@@ -64,6 +69,28 @@ public class CalculatorController implements TextListener, ActionListener{
 		this.view.textField.setText(clickedButton.getLabel());
 	}
 
+	/**
+	 * This is an event-handler that make sure only numeric character
+	 * are present within the text field.
+	 * 
+	 */
 	@Override
-	public void textValueChanged(TextEvent e) {}
+	public void textValueChanged(TextEvent e) {
+		
+		// Initialization
+		TextField textField = this.view.textField;
+		String newInputText = textField.getText();
+		
+		// Regex pattern checking
+		Pattern pattern = Pattern.compile("^[0-9]*$");
+		Matcher matcher = pattern.matcher(newInputText);
+		
+		// Performing respective operation
+		if(matcher.find()) {
+			this.textFieldCurrentText = newInputText;
+		} else if(!newInputText.equals(textFieldCurrentText)) {
+			textField.setText(textFieldCurrentText);
+			textField.setCaretPosition(textFieldCurrentText.length());	// Sets the cursor to end of the setter string
+		}
+	}
 }
