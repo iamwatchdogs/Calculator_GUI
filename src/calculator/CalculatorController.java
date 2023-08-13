@@ -8,6 +8,7 @@ import java.awt.event.TextEvent;
 import java.awt.event.TextListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -64,6 +65,8 @@ public class CalculatorController implements TextListener, ActionListener{
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		
+		// Type-casted the event source into triggering Button object
 		Button clickedButton = (Button)e.getSource();
 		this.view.textField.setText(clickedButton.getLabel());
 	}
@@ -81,7 +84,7 @@ public class CalculatorController implements TextListener, ActionListener{
 		String newInputText = textField.getText();
 		
 		// Regex pattern checking
-		Pattern pattern = Pattern.compile("^[0-9]*$");
+		Pattern pattern = Pattern.compile("^[\\d\\+\\-\\*/%\\.]*$");
 		Matcher matcher = pattern.matcher(newInputText);
 		
 		// Performing respective operation
