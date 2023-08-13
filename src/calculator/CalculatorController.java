@@ -48,7 +48,7 @@ public class CalculatorController implements TextListener, ActionListener{
 		this.textFieldCurrentText = new StringBuilder();
 		
 		// Register the components with the listener.
-		model.getAllChildren(view.keypad).forEach((button)->{
+		CalculatorModel.getAllChildren(view.keypad).forEach((button)->{
 			((Button)button).addActionListener(this);
 		});
 		
