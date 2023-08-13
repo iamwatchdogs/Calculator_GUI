@@ -1,5 +1,10 @@
 package calculator;
 
+import java.awt.Button;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.TextEvent;
+import java.awt.event.TextListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
@@ -9,10 +14,14 @@ import java.awt.event.WindowEvent;
  * 
  * @author Shamith Nakka
  * @version 1.0.0
- * @since 12 Aug 2023
+ * @since 13 Aug 2023
  *
  */
-public class CalculatorController {
+public class CalculatorController implements TextListener, ActionListener{
+	
+	// Saving their references to increase their scope for other methods
+	private final CalculatorModel model;
+	private final CalculatorView view;
 	
 	/**
 	 * Constructs a new CalculatorModel instance.
@@ -28,6 +37,17 @@ public class CalculatorController {
 	 */
 	public CalculatorController(CalculatorView view, CalculatorModel model){
 		
+		// Initialization
+		this.model = model;
+		this.view = view;
+		
+		// Register the components with the listener.
+		model.getAllChildren(view.keypad).forEach((button)->{
+			((Button)button).addActionListener(this);
+		});
+		
+		view.textField.addTextListener(this);
+		
 		// windows listener to close the application
 		view.addWindowListener( new WindowAdapter() {
 			@Override
@@ -36,4 +56,14 @@ public class CalculatorController {
 			}
 		});
 	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		// This is a test
+		Button clickedButton = (Button)e.getSource();
+		this.view.textField.setText(clickedButton.getLabel());
+	}
+
+	@Override
+	public void textValueChanged(TextEvent e) {}
 }

@@ -2,7 +2,7 @@ package calculator;
 
 import java.awt.Component;
 import java.awt.Container;
-import java.util.HashMap;
+import java.util.HashSet;
 
 /**
  * This class represents the model in the MVC architecture for a calculator application.
@@ -10,7 +10,7 @@ import java.util.HashMap;
  * 
  * @author Shamith Nakka
  * @version 1.0.0
- * @since 12 Aug 2023
+ * @since 13 Aug 2023
  *
  */
 public class CalculatorModel {
@@ -22,28 +22,22 @@ public class CalculatorModel {
 	public CalculatorModel() {}
 	
 	/**
-	 * This function returns all the children(in whole hierarchy) of given container.
+	 * This function returns all the children of given container.
 	 * 
-	 * @param container[java.awt.Container] : container object
+	 * @param container[java.awt.Container] : Container object.
 	 * 
-	 * @return children[HashMap] : list of children mapped with their name
+	 * @return children[HashSet] : list of component children
 	 */
-	public HashMap<String,Component> getAllChildren(Container container) {
+	public HashSet<Component> getAllChildren(Container container) {
 		
 		// Initialization
-		HashMap<String,Component> children = new HashMap<>();
+		HashSet<Component> children = new HashSet<>();
 		
 		// Retrieving Components
 		for(Component child : container.getComponents()) {
-			
-			// Storing them w.r.t their name
-			children.put(child.getName(), child);
-			
-			// Collecting the grand children of Container
-			if (child instanceof Container) {
-				children.putAll(this.getAllChildren((Container) child));
-			}
+			children.add(child);
 		}
+		
 		return children;
 	}
 }
