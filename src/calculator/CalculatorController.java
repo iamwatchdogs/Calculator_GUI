@@ -68,7 +68,18 @@ public class CalculatorController implements TextListener, ActionListener{
 		
 		// Type-casted the event source into triggering Button object
 		Button clickedButton = (Button)e.getSource();
-		this.view.textField.setText(clickedButton.getLabel());
+		
+		// Regex pattern checking
+		Pattern pattern = Pattern.compile("^C|BS|=|\\+/\\-*$");
+		Matcher matcher = pattern.matcher(clickedButton.getLabel());
+		
+		// Performing respective operation
+		if(matcher.find()) {
+			// Performs operation w.r.t input
+		} else {
+			this.textFieldCurrentText.append(clickedButton.getLabel());
+			this.view.textField.setText(this.textFieldCurrentText.toString());
+		}
 	}
 
 	/**
