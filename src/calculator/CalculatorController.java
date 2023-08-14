@@ -79,11 +79,17 @@ public class CalculatorController implements TextListener, ActionListener{
 		
 		// Performing respective operation
 		if(shouldPerformOperation) {
-			this.model.handleOperation(label, textFieldCurrentText);
+			try {
+				this.model.handleOperation(label, textFieldCurrentText);
+			} catch(InvaildOperatorException exception) {
+				System.out.println(exception + "\nCheck the regex on actionPerform() method");	// Will convert to pop up (if possible)
+			}catch(Exception exception) {
+				exception.printStackTrace();	// Handling any other possible exception
+			}
 		} else {
 			this.textFieldCurrentText.append(label);
-			this.view.textField.setText(this.textFieldCurrentText.toString());
 		}
+		this.view.textField.setText(this.textFieldCurrentText.toString());
 	}
 
 	/**

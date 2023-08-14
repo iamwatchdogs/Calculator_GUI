@@ -79,7 +79,38 @@ public class CalculatorModel {
 	 * 
 	 * @return void
 	 */
-	public void handleOperation(String operationName, StringBuilder argumentString) {
-		// Need to create a logic here
+	public void handleOperation(String operationName, StringBuilder argumentStringBuilder) throws Exception {
+		switch(operationName) {
+			case "C" -> argumentStringBuilder.delete(0, argumentStringBuilder.length());
+			case "BS" -> argumentStringBuilder.deleteCharAt(argumentStringBuilder.length()-1);
+			case "+/-" -> replaceStringBuilderValue(argumentStringBuilder, this.nagateInputString(argumentStringBuilder.toString()));
+			case "=" -> replaceStringBuilderValue(argumentStringBuilder, this.evaluateExpression(argumentStringBuilder.toString()));
+			default -> new InvaildOperatorException();
+		}
+	}
+	
+	private String nagateInputString(String input) {
+		String output = "Still working on it";
+		return output;
+	}
+	
+	private String evaluateExpression(String Input) {
+		String output = "Still working on it";
+		return output;
+	}
+}
+
+/**
+ * Created for handling the unexpected operationName value.
+ * 
+ * @author Shamith Nakka
+ * @see CalculatorModel::handleOperation()
+ *
+ */
+@SuppressWarnings("serial")
+class InvaildOperatorException extends Exception{
+	@Override
+	public String toString() {
+		return "Invaild OperationName value.";
 	}
 }
