@@ -60,6 +60,10 @@ public class CalculatorController implements TextListener, ActionListener{
 		});
 	}
 
+	/**
+ 	 * This is an event-handler will handle all the button events.
+	 * 
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		
@@ -75,7 +79,7 @@ public class CalculatorController implements TextListener, ActionListener{
 		
 		// Performing respective operation
 		if(shouldPerformOperation) {
-			// Performs operation w.r.t input
+			// Performs special operation
 		} else {
 			this.textFieldCurrentText.append(label);
 			this.view.textField.setText(this.textFieldCurrentText.toString());

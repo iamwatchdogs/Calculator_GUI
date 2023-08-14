@@ -3,6 +3,8 @@ package calculator;
 import java.awt.Component;
 import java.awt.Container;
 import java.util.HashSet;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * This class represents the model in the MVC architecture for a calculator application.
@@ -28,7 +30,7 @@ public class CalculatorModel {
 	 * 
 	 * @return children[HashSet] : list of component children
 	 */
-	public HashSet<Component> getAllChildren(Container container) {
+	public static HashSet<Component> getAllChildren(Container container) {
 		
 		// Initialization
 		HashSet<Component> children = new HashSet<>();
@@ -39,5 +41,19 @@ public class CalculatorModel {
 		}
 		
 		return children;
+	}
+	
+	/**
+	 * This method will check whether the given target string matches the
+	 * given regular expression.
+	 * 
+	 * @param regex : Regular Expression
+	 * @param targetString : String need to checked
+	 * @return [boolean]: 
+	 */
+	public static boolean matchesRegex(String regex, String targetString) {
+		Pattern pattern = Pattern.compile(regex);
+		Matcher matcher = pattern.matcher(targetString);
+		return matcher.find();
 	}
 }
