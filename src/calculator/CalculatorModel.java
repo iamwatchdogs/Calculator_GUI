@@ -28,7 +28,7 @@ public class CalculatorModel {
 	 * 
 	 * @param container[java.awt.Container] : Container object.
 	 * 
-	 * @return children[HashSet] : list of component children
+	 * @return children[HashSet] : set of component children.
 	 */
 	public static HashSet<Component> getAllChildren(Container container) {
 		
@@ -47,10 +47,10 @@ public class CalculatorModel {
 	 * This method will check whether the given target string matches the
 	 * given regular expression.
 	 * 
-	 * @param regex : Regular Expression
-	 * @param targetString : String need to checked
+	 * @param regex : Regular Expression.
+	 * @param targetString : String need to checked.
 	 * 
-	 * @return [boolean]:
+	 * @return [boolean]: return true if given string matches given regex.
 	 */
 	public static boolean matchesRegex(String regex, String targetString) {
 		Pattern pattern = Pattern.compile(regex);
@@ -62,8 +62,8 @@ public class CalculatorModel {
 	 * This method takes an StringBuilder object and replace it's String value
 	 * with given string value.
 	 * 
-	 * @param stringBuilder : Given StringBuidler object
-	 * @param stringValue : String value needed to be replaced
+	 * @param stringBuilder : Given StringBuidler object.
+	 * @param stringValue : String value needed to be replaced.
 	 * 
 	 * @return void
 	 */
@@ -74,7 +74,7 @@ public class CalculatorModel {
 	/**
 	 * This method will handle all the special operation of the calculator.
 	 * 
-	 * @param operationName : Defines the type of operation
+	 * @param operationName : Defines the type of operation.
 	 * @param argumentString : User Input data.
 	 * 
 	 * @return void

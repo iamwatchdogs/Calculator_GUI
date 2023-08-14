@@ -43,8 +43,8 @@ public class CalculatorController implements TextListener, ActionListener{
 		this.model = model;
 		this.view = view;
 		this.textFieldCurrentText = new StringBuilder();
-		
-		// Register the components with the listener.
+				
+		// Register the components with the listener
 		CalculatorModel.getAllChildren(view.keypad).forEach((button)->{
 			((Button)button).addActionListener(this);
 		});
@@ -79,7 +79,7 @@ public class CalculatorController implements TextListener, ActionListener{
 		
 		// Performing respective operation
 		if(shouldPerformOperation) {
-			// Performs special operation
+			this.model.handleOperation(label, textFieldCurrentText);
 		} else {
 			this.textFieldCurrentText.append(label);
 			this.view.textField.setText(this.textFieldCurrentText.toString());
@@ -106,10 +106,10 @@ public class CalculatorController implements TextListener, ActionListener{
 		
 		// Performing respective operation
 		if(shouldUpdateCurrentText) {
-			this.textFieldCurrentText.replace(0, this.textFieldCurrentText.length(), newInputText);
+			CalculatorModel.replaceStringBuilderValue(textFieldCurrentText, newInputText);
 		} else if(!newInputText.equals(textFieldCurrentText.toString())) {
 			textField.setText(textFieldCurrentText.toString());
-			textField.setCaretPosition(textFieldCurrentText.length());	// Sets the cursor to end of the setter string
 		}
+		textField.setCaretPosition(textFieldCurrentText.length());	// Sets the cursor to end of the setter string
 	}
 }

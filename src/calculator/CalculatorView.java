@@ -66,12 +66,12 @@ public class CalculatorView extends Frame implements Keypad {
 	/**
 	 * This function adds components to the main Frame window w.r.t provided constraint values.
 	 * 
-	 * @param component : java.awt.Component object
-	 * @param gridx : x value on grid
-	 * @param gridy : y value on grid
-	 * @param weightx : weight value of x-coordinate on grid
-	 * @param weighty : weight value of y-coordinate on grid
-	 * @param padding : array of padding value (Top, Left, Bottom, Right)
+	 * @param component : java.awt.Component object.
+	 * @param gridx : x value on grid.
+	 * @param gridy : y value on grid.
+	 * @param weightx : weight value of x-coordinate on grid.
+	 * @param weighty : weight value of y-coordinate on grid.
+	 * @param padding : array of padding value (Top, Left, Bottom, Right).
 	 * 
 	 * @return void
 	 * 
@@ -109,7 +109,7 @@ public class CalculatorView extends Frame implements Keypad {
 	/**
 	 * Returns the absolute path to icon
 	 * 
-	 * @param Not Required
+	 * @param Not Required.
 	 * 
 	 * @return absolutePathToIcon[String]
 	 */
@@ -143,9 +143,9 @@ interface Keypad {
 	 * This function returns a java.awt.Panel object that contains
 	 * all the buttons required for a simple calculator.
 	 * 
-	 * @param No Parameter required
+	 * @param No Parameter required.
 	 * 
-	 * @return keypad[java.awt.Panel] : Panel object
+	 * @return keypad[java.awt.Panel] : Panel object.
 	 * 
 	 */
 	default Panel createKeypad() {
