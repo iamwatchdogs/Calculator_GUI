@@ -49,11 +49,25 @@ public class CalculatorModel {
 	 * 
 	 * @param regex : Regular Expression
 	 * @param targetString : String need to checked
+	 * 
 	 * @return [boolean]: 
 	 */
 	public static boolean matchesRegex(String regex, String targetString) {
 		Pattern pattern = Pattern.compile(regex);
 		Matcher matcher = pattern.matcher(targetString);
 		return matcher.find();
+	}
+	
+	/**
+	 * This method takes an StringBuilder object and replace it's String value
+	 * with given string value.
+	 * 
+	 * @param stringBuilder : Given StringBuidler object
+	 * @param stringValue : String value needed to be replaced
+	 * 
+	 * @return void
+	 */
+	public static void replaceStringBuilderValue(StringBuilder stringBuilder, String stringValue) {
+		stringBuilder.replace(0, stringBuilder.length(), stringValue);
 	}
 }
