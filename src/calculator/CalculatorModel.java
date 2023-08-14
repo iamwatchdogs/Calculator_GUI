@@ -50,7 +50,7 @@ public class CalculatorModel {
 	 * @param regex : Regular Expression
 	 * @param targetString : String need to checked
 	 * 
-	 * @return [boolean]: 
+	 * @return [boolean]:
 	 */
 	public static boolean matchesRegex(String regex, String targetString) {
 		Pattern pattern = Pattern.compile(regex);
@@ -69,5 +69,17 @@ public class CalculatorModel {
 	 */
 	public static void replaceStringBuilderValue(StringBuilder stringBuilder, String stringValue) {
 		stringBuilder.replace(0, stringBuilder.length(), stringValue);
+	}
+	
+	/**
+	 * This method will handle all the special operation of the calculator.
+	 * 
+	 * @param operationName : Defines the type of operation
+	 * @param argumentString : User Input data.
+	 * 
+	 * @return void
+	 */
+	public void handleOperation(String operationName, StringBuilder argumentString) {
+		// Need to create a logic here
 	}
 }
