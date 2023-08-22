@@ -5,6 +5,7 @@ import java.awt.Container;
 import java.util.HashSet;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.Stack;
 
 /**
  * This class represents the model in the MVC architecture for a calculator application.
@@ -17,14 +18,17 @@ import java.util.regex.Pattern;
  */
 public class CalculatorModel {
 	
-	private String previousValue;
+	// Private members
+	private Stack<String> previousValues;
+	private Stack<String> operations;
 	
 	/**
 	 * Constructs a new CalculatorModel instance.
 	 * This constructor initializes any required data or resources.
 	 */
 	public CalculatorModel() {
-		this.previousValue = null;
+		this.previousValues = new Stack<>();
+		this.operations = new Stack<>();
 	}
 	
 	/**
@@ -133,8 +137,10 @@ public class CalculatorModel {
 	 * @return void
 	 */
 	private void addition(StringBuilder inputStringBuilder) {
-		String output = "Still working on it";
-		replaceStringBuilderValue(inputStringBuilder, output);
+		String output = inputStringBuilder.toString();
+		this.previousValues.push(output);
+		this.operations.push("+");
+		clearTextFeild(inputStringBuilder);
 	}
 	
 	/**
@@ -144,8 +150,10 @@ public class CalculatorModel {
 	 * @return void
 	 */
 	private void subtraction(StringBuilder inputStringBuilder) {
-		String output = "Still working on it";
-		replaceStringBuilderValue(inputStringBuilder, output);
+		String output = inputStringBuilder.toString();
+		this.previousValues.push(output);
+		this.operations.push("-");
+		clearTextFeild(inputStringBuilder);
 	}
 	
 	/**
