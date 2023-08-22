@@ -71,7 +71,7 @@ public class CalculatorController implements TextListener, ActionListener{
 		Button clickedButton = (Button)e.getSource();
 		
 		// Setting up regex parameters
-		String regex = "^C|BS|=|\\+/\\-*$";
+		String regex = "^C|BS|=|\\+|\\-|\\*|/|%$";
 		String label = clickedButton.getLabel();
 		
 		// Evaluating regex
@@ -82,11 +82,11 @@ public class CalculatorController implements TextListener, ActionListener{
 			try {
 				this.model.handleOperation(label, textFieldCurrentText);
 			} catch(InvaildOperatorException exception) {
-				System.out.println(exception + "\nCheck the regex on actionPerform() method");	// Will convert to pop up (if possible)
+				System.out.println(exception + "\nCheck the regex on actionPerform() method");		// Will convert to pop up (if possible)
 			}catch(Exception exception) {
 				exception.printStackTrace();	// Handling any other possible exception
 			}
-		} else {
+		} else if(CalculatorModel.isNumericValue(this.textFieldCurrentText.toString() + label)){	// Check whether it's a numeric or not
 			this.textFieldCurrentText.append(label);
 		}
 		this.view.textField.setText(this.textFieldCurrentText.toString());
@@ -104,11 +104,10 @@ public class CalculatorController implements TextListener, ActionListener{
 		TextField textField = this.view.textField;
 		
 		// Setting up regex parameters
-		String regex = "^[\\d\\+\\-\\*/%\\.]*$";
 		String newInputText = textField.getText();
 		
-		// Evaluating regex
-		boolean shouldUpdateCurrentText = CalculatorModel.matchesRegex(regex, newInputText);
+		// Checking whether it's numeric or not
+		boolean shouldUpdateCurrentText = CalculatorModel.isNumericValue(newInputText);
 		
 		// Performing respective operation
 		if(shouldUpdateCurrentText) {

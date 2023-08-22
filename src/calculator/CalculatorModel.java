@@ -55,7 +55,7 @@ public class CalculatorModel {
 	public static boolean matchesRegex(String regex, String targetString) {
 		Pattern pattern = Pattern.compile(regex);
 		Matcher matcher = pattern.matcher(targetString);
-		return matcher.find();
+		return matcher.matches();
 	}
 	
 	/**
@@ -69,6 +69,18 @@ public class CalculatorModel {
 	 */
 	public static void replaceStringBuilderValue(StringBuilder stringBuilder, String stringValue) {
 		stringBuilder.replace(0, stringBuilder.length(), stringValue);
+	}
+	
+	/**
+	 * This methods takes a String input and return true if it's possible numeric value else false.
+	 * 
+	 * @param inputString[String] : Input string that need to be checked.
+	 * @return isVaild[boolean] : Returns true if it's numeric value else false
+	 */
+	public static boolean isNumericValue (String inputString) {
+		String regexForNumericValues = "^[0-9]*(\\.[0-9]*)?$";
+		boolean isValid = matchesRegex(regexForNumericValues, inputString);
+		return isValid;
 	}
 	
 	/**
