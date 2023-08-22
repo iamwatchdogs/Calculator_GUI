@@ -222,8 +222,23 @@ public class CalculatorModel {
 	 * @return void
 	 */
 	private void division(StringBuilder inputStringBuilder) {
-		String output = "Still working on it";
-		replaceStringBuilderValue(inputStringBuilder, output);
+
+		// Getting values
+		String output = inputStringBuilder.toString();
+		String previousValue = this.previousValues.pop();
+			
+		// Parsing Values
+		double operand1 = Double.parseDouble(previousValue);
+		double operand2 = Double.parseDouble(output);
+		
+		// Getting the round value
+		double result = Math.round((operand1 / operand2) * 100.0)/100.0;
+		
+		// Final result
+		String value = String.valueOf(result);
+		
+		this.previousValues.push(value);
+		clearTextFeild(inputStringBuilder);
 	}
 	
 	/**
