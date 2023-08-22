@@ -308,6 +308,7 @@ public class CalculatorModel {
 	 * @return void
 	 */
 	public void handleOperation(String operationName, StringBuilder argumentStringBuilder) throws Exception {
+		if(argumentStringBuilder.length() == 0)		return;
 		switch(operationName) {
 			case "C" -> clearTextFeild(argumentStringBuilder);
 			case "BS" -> backspaceTextFeild(argumentStringBuilder);
