@@ -130,6 +130,61 @@ public class CalculatorModel {
 	}
 	
 	/**
+	 * This method performs the addition operation.
+	 * 
+	 * @param inputStringBuilder
+	 * @return void
+	 */
+	private static void addition(StringBuilder inputStringBuilder) {
+		String output = "Still working on it";
+		replaceStringBuilderValue(inputStringBuilder, output);
+	}
+	
+	/**
+	 * This method performs the subtraction operation.
+	 * 
+	 * @param inputStringBuilder
+	 * @return void
+	 */
+	private static void subtraction(StringBuilder inputStringBuilder) {
+		String output = "Still working on it";
+		replaceStringBuilderValue(inputStringBuilder, output);
+	}
+	
+	/**
+	 * This method performs the multiplication operation.
+	 * 
+	 * @param inputStringBuilder
+	 * @return void
+	 */
+	private static void multiplication(StringBuilder inputStringBuilder) {
+		String output = "Still working on it";
+		replaceStringBuilderValue(inputStringBuilder, output);
+	}
+	
+	/**
+	 * This method performs the division operation.
+	 * 
+	 * @param inputStringBuilder
+	 * @return void
+	 */
+	private static void division(StringBuilder inputStringBuilder) {
+		String output = "Still working on it";
+		replaceStringBuilderValue(inputStringBuilder, output);
+	}
+	
+	/**
+	 * This method performs the modular division operation.
+	 * 
+	 * @param inputStringBuilder
+	 * @return void
+	 */
+	private static void modularDivision(StringBuilder inputStringBuilder) {
+		String output = "Still working on it";
+		replaceStringBuilderValue(inputStringBuilder, output);
+	}
+	
+	/**
 	 * This method will handle all the special operation of the calculator.
 	 * 
 	 * @param operationName : Defines the type of operation.
@@ -142,6 +197,11 @@ public class CalculatorModel {
 			case "C" -> clearTextFeild(argumentStringBuilder);
 			case "BS" -> backspaceTextFeild(argumentStringBuilder);
 			case "+/-" -> negateInputString(argumentStringBuilder);
+			case "+" -> addition(argumentStringBuilder);
+			case "-" -> subtraction(argumentStringBuilder);
+			case "*" -> multiplication(argumentStringBuilder);
+			case "/" -> division(argumentStringBuilder);
+			case "%" -> modularDivision(argumentStringBuilder);
 			case "=" -> evaluateExpression(argumentStringBuilder);
 			default -> new InvaildOperatorException();
 		}
