@@ -108,6 +108,28 @@ public class CalculatorModel {
 	}
 	
 	/**
+	 * This method negates the value of given StringBuilder.
+	 * 
+	 * @param inputStringBuilder
+	 * @return void
+	 */
+	private static void negateInputString(StringBuilder inputStringBuilder) {
+		String output = "Still working on it";
+		replaceStringBuilderValue(inputStringBuilder, output);
+	}
+	
+	/**
+	 * This method evaluates the current expression.
+	 * 
+	 * @param inputStringBuilder
+	 * @return void
+	 */
+	private static void evaluateExpression(StringBuilder inputStringBuilder) {
+		String output = "Still working on it";
+		replaceStringBuilderValue(inputStringBuilder, output);
+	}
+	
+	/**
 	 * This method will handle all the special operation of the calculator.
 	 * 
 	 * @param operationName : Defines the type of operation.
@@ -119,20 +141,10 @@ public class CalculatorModel {
 		switch(operationName) {
 			case "C" -> clearTextFeild(argumentStringBuilder);
 			case "BS" -> backspaceTextFeild(argumentStringBuilder);
-			case "+/-" -> replaceStringBuilderValue(argumentStringBuilder, this.nagateInputString(argumentStringBuilder.toString()));
-			case "=" -> replaceStringBuilderValue(argumentStringBuilder, this.evaluateExpression(argumentStringBuilder.toString()));
+			case "+/-" -> negateInputString(argumentStringBuilder);
+			case "=" -> evaluateExpression(argumentStringBuilder);
 			default -> new InvaildOperatorException();
 		}
-	}
-
-	private String nagateInputString(String input) {
-		String output = "Still working on it";
-		return output;
-	}
-	
-	private String evaluateExpression(String Input) {
-		String output = "Still working on it";
-		return output;
 	}
 }
 
