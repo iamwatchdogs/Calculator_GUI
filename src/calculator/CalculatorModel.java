@@ -150,7 +150,7 @@ public class CalculatorModel {
 	 * @param handleOperation : Lambda function to perform provided operation.
 	 * @return value : a String value representing the end result of the operation.
 	 */
-	private static String executeOperation(String operand1, String operand2, ArithmeticOperation handleOperation) {
+	private static String executeOperation(String operand1, String operand2, ArithmeticOperation<Number> handleOperation) {
 		
 		String value = null;
 		
@@ -165,7 +165,7 @@ public class CalculatorModel {
 			double numericOperand2 = Double.parseDouble(operand2);
 			
 			// Getting the round value
-			double result = Math.round(handleOperation.operation(numericOperand1, numericOperand2) * 100.0)/100.0;
+			double result = Math.round((Double)handleOperation.operation(numericOperand1, numericOperand2) * 100.0)/100.0;
 			
 			// Final result
 			value = String.valueOf(result);
@@ -176,7 +176,7 @@ public class CalculatorModel {
 			long numericOperand2 = Long.parseLong(operand2);
 			
 			// Getting the round value
-			long result = handleOperation.operation(numericOperand1, numericOperand2);
+			long result = (Long)handleOperation.operation(numericOperand1, numericOperand2);
 			
 			// Final result
 			value = String.valueOf(result);
@@ -225,7 +225,7 @@ public class CalculatorModel {
 		// Getting values
 		String output = inputStringBuilder.toString();
 		String previousValue = this.previousValues.pop();
-		
+	    
 		// Checking for decimal values
 		boolean outputHasDecimalValue = hasDecimalValue(output);
 		boolean previousValueHasDecimalValue = hasDecimalValue(previousValue);
@@ -390,6 +390,6 @@ class InvaildOperatorException extends Exception{
  * 
  */
 @FunctionalInterface
-interface ArithmeticOperation {
-	public <T extends Number> T operation(T operand1, T operand2);
+interface ArithmeticOperation <T extends Number> {
+	public T operation(T operand1, T operand2);
 }
