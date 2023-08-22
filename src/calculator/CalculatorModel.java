@@ -143,6 +143,49 @@ public class CalculatorModel {
 	}
 	
 	/**
+	 * This function executes the operation provided according the values passed to it.
+	 * 
+	 * @param operand1 : a String value representing an numeric value.
+	 * @param operand2 : another String value representing an numeric value.
+	 * @param handleOperation : Lambda function to perform provided operation.
+	 * @return value : a String value representing the end result of the operation.
+	 */
+	private static String executeOperation(String operand1, String operand2, ArithmeticOperation handleOperation) {
+		
+		String value = null;
+		
+		// Checking for decimal values
+		boolean operand1HasDecimalValue = hasDecimalValue(operand1);
+		boolean operand2HasDecimalValue = hasDecimalValue(operand2);
+		
+		if(operand1HasDecimalValue || operand2HasDecimalValue) {
+			
+			// Parsing Values
+			double numericOperand1 = Double.parseDouble(operand1);
+			double numericOperand2 = Double.parseDouble(operand2);
+			
+			// Getting the round value
+			double result = Math.round(handleOperation.operation(numericOperand1, numericOperand2) * 100.0)/100.0;
+			
+			// Final result
+			value = String.valueOf(result);
+		} else {
+			
+			// Parsing Values
+			long numericOperand1 = Long.parseLong(operand1);
+			long numericOperand2 = Long.parseLong(operand2);
+			
+			// Getting the round value
+			long result = handleOperation.operation(numericOperand1, numericOperand2);
+			
+			// Final result
+			value = String.valueOf(result);
+		}
+		
+		return value;
+	}
+	
+	/**
 	 * This method performs the addition operation.
 	 * 
 	 * @param inputStringBuilder
@@ -337,4 +380,16 @@ class InvaildOperatorException extends Exception{
 	public String toString() {
 		return "Invaild OperationName value.";
 	}
+}
+
+/**
+ * Created for the usage of an generic lambda function.
+ * 
+ * @author Shamith Nakka
+ * @see CalculatorModel::executeOperation()
+ * 
+ */
+@FunctionalInterface
+interface ArithmeticOperation {
+	public <T extends Number> T operation(T operand1, T operand2);
 }
