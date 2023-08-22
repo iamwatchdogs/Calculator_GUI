@@ -92,6 +92,18 @@ public class CalculatorModel {
 	}
 	
 	/**
+	 * This methods take a String value and return true if the String has decimal value or not.
+	 * 
+	 * @param inputString
+	 * @return
+	 */
+	public static boolean hasDecimalValue(String inputString) {
+		String regexForCheckingDecimalPoint = "^[0-9]*\\.[0-9]*$";
+		boolean isValid = matchesRegex(regexForCheckingDecimalPoint, inputString);
+		return isValid;
+	}
+	
+	/**
 	 * This method clears the String value of the given StringBuilder.
 	 * 
 	 * @param argumentStringBuilder : a StringBuilder object containing data for the text field
