@@ -175,8 +175,44 @@ public class CalculatorModel {
 	 * @return void
 	 */
 	private void multiplication(StringBuilder inputStringBuilder) {
-		String output = "Still working on it";
-		replaceStringBuilderValue(inputStringBuilder, output);
+		
+		// Declaration
+		String value = null;
+		
+		// Getting values
+		String output = inputStringBuilder.toString();
+		String previousValue = this.previousValues.pop();
+		
+		// Checking for decimal values
+		boolean outputHasDecimalValue = hasDecimalValue(output);
+		boolean previousValueHasDecimalValue = hasDecimalValue(previousValue);
+		
+		if(outputHasDecimalValue || previousValueHasDecimalValue) {
+			
+			// Parsing Values
+			double operand1 = Double.parseDouble(previousValue);
+			double operand2 = Double.parseDouble(output);
+			
+			// Getting the round value
+			double result = Math.round(operand1 * operand2 * 100.0)/100.0;
+			
+			// Final result
+			value = String.valueOf(result);
+		} else {
+			
+			// Parsing Values
+			long operand1 = Long.parseLong(previousValue);
+			long operand2 = Long.parseLong(output);
+			
+			// Getting the round value
+			long result = operand1 * operand2;
+			
+			// Final result
+			value = String.valueOf(result);
+		}
+		
+		this.previousValues.push(value);
+		clearTextFeild(inputStringBuilder);
 	}
 	
 	/**
