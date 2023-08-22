@@ -186,103 +186,16 @@ public class CalculatorModel {
 	}
 	
 	/**
-	 * This method performs the addition operation.
+	 * Pushes the input TextField with operation into respective stacks.
 	 * 
-	 * @param inputStringBuilder
+	 * @param inputStringBuilder : StringBuilder object of TextFeild
+	 * @param operator : String value of Operator
 	 * @return void
 	 */
-	private void addition(StringBuilder inputStringBuilder) {
+	private void selecteArithmeticdOperation(StringBuilder inputStringBuilder, String operator) {
 		String output = inputStringBuilder.toString();
 		this.previousValues.push(output);
-		this.operations.push("+");
-		clearTextFeild(inputStringBuilder);
-	}
-	
-	/**
-	 * This method performs the subtraction operation.
-	 * 
-	 * @param inputStringBuilder
-	 * @return void
-	 */
-	private void subtraction(StringBuilder inputStringBuilder) {
-		String output = inputStringBuilder.toString();
-		this.previousValues.push(output);
-		this.operations.push("-");
-		clearTextFeild(inputStringBuilder);
-	}
-	
-	/**
-	 * This method performs the multiplication operation.
-	 * 
-	 * @param inputStringBuilder
-	 * @return void
-	 */
-	private void multiplication(StringBuilder inputStringBuilder) {
-		
-		// Getting values
-		String output = inputStringBuilder.toString();
-		String previousValue = this.previousValues.pop();
-		
-		// Creating a lambda expression
-		ArithmeticOperation<Number> multiply = (operand1, operand2) -> 
-			(operand1 instanceof Double || operand2 instanceof Double)
-	        	? operand1.doubleValue() * operand2.doubleValue()
-	        	: operand1.longValue() * operand2.longValue();
-	    
-		// Getting end result
-	    String value = executeOperation(previousValue, output, multiply); 
-		
-	    // Pushes back to Stack and cleans TextField
-		this.previousValues.push(value);
-		clearTextFeild(inputStringBuilder);
-	}
-	
-	/**
-	 * This method performs the division operation.
-	 * 
-	 * @param inputStringBuilder
-	 * @return void
-	 */
-	private void division(StringBuilder inputStringBuilder) {
-
-		// Getting values
-		String output = inputStringBuilder.toString();
-		String previousValue = this.previousValues.pop();
-		
-		// Creating a lambda expression
-		ArithmeticOperation<Number> divide = (operand1, operand2) -> operand1.doubleValue()/operand2.doubleValue();
-	    
-		// Getting end result
-	    String value = executeOperation(previousValue, output, divide); 
-		
-	    // Pushes back to Stack and cleans TextField
-		this.previousValues.push(value);
-		clearTextFeild(inputStringBuilder);
-	}
-	
-	/**
-	 * This method performs the modular division operation.
-	 * 
-	 * @param inputStringBuilder
-	 * @return void
-	 */
-	private void modularDivision(StringBuilder inputStringBuilder) {
-		
-		// Getting values
-		String output = inputStringBuilder.toString();
-		String previousValue = this.previousValues.pop();
-		
-		// Creating a lambda expression
-		ArithmeticOperation<Number> mod = (operand1, operand2) -> 
-			(operand1 instanceof Double || operand2 instanceof Double)
-	        	? operand1.doubleValue() % operand2.doubleValue()
-	        	: operand1.longValue() % operand2.longValue();
-	    
-		// Getting end result
-	    String value = executeOperation(previousValue, output, mod); 
-		
-	    // Pushes back to Stack and cleans TextField
-		this.previousValues.push(value);
+		this.operations.push(operator);
 		clearTextFeild(inputStringBuilder);
 	}
 	
@@ -311,11 +224,11 @@ public class CalculatorModel {
 			case "C" -> clearTextFeild(argumentStringBuilder);
 			case "BS" -> backspaceTextFeild(argumentStringBuilder);
 			case "+/-" -> negateInputString(argumentStringBuilder);
-			case "+" -> this.addition(argumentStringBuilder);
-			case "-" -> this.subtraction(argumentStringBuilder);
-			case "*" -> this.multiplication(argumentStringBuilder);
-			case "/" -> this.division(argumentStringBuilder);
-			case "%" -> this.modularDivision(argumentStringBuilder);
+			case "+" -> this.selecteArithmeticdOperation(argumentStringBuilder, operationName);
+			case "-" -> this.selecteArithmeticdOperation(argumentStringBuilder, operationName);
+			case "*" -> this.selecteArithmeticdOperation(argumentStringBuilder, operationName);
+			case "/" -> this.selecteArithmeticdOperation(argumentStringBuilder, operationName);
+			case "%" -> this.selecteArithmeticdOperation(argumentStringBuilder, operationName);
 			case "=" -> this.evaluateExpression(argumentStringBuilder);
 			default -> new InvaildOperatorException();
 		}
