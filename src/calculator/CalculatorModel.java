@@ -16,7 +16,7 @@ import java.util.regex.Pattern;
  *
  */
 public class CalculatorModel {
-	
+ 
 	/**
 	 * Constructs a new CalculatorModel instance.
 	 * This constructor initializes any required data or resources.
@@ -74,13 +74,37 @@ public class CalculatorModel {
 	/**
 	 * This methods takes a String input and return true if it's possible numeric value else false.
 	 * 
-	 * @param inputString[String] : Input string that need to be checked.
+	 * @param inputString : Input string that need to be checked.
 	 * @return isVaild[boolean] : Returns true if it's numeric value else false
 	 */
-	public static boolean isNumericValue (String inputString) {
+	public static boolean isNumericValue(String inputString) {
 		String regexForNumericValues = "^[0-9]*(\\.[0-9]*)?$";
 		boolean isValid = matchesRegex(regexForNumericValues, inputString);
 		return isValid;
+	}
+	
+	/**
+	 * This method clears the String value of the given StringBuilder.
+	 * 
+	 * @param argumentStringBuilder : a StringBuilder object containing data for the text field
+	 * 
+	 * @return void
+	 */
+	private static void clearTextFeild(StringBuilder argumentStringBuilder) {
+		if(argumentStringBuilder.length() != 0)
+			argumentStringBuilder.delete(0, argumentStringBuilder.length());
+	}
+	
+	/**
+	 * This method removes the last character of the String value for the given StringBuilder.
+	 * 
+	 * @param argumentStringBuilder : a StringBuilder object containing data for the text field
+	 * 
+	 * @return void
+	 */
+	private static void backspaceTextFeild(StringBuilder argumentStringBuilder) {
+		if(argumentStringBuilder.length() != 0)
+			argumentStringBuilder.deleteCharAt(argumentStringBuilder.length()-1);
 	}
 	
 	/**
@@ -93,14 +117,14 @@ public class CalculatorModel {
 	 */
 	public void handleOperation(String operationName, StringBuilder argumentStringBuilder) throws Exception {
 		switch(operationName) {
-			case "C" -> argumentStringBuilder.delete(0, argumentStringBuilder.length());
-			case "BS" -> argumentStringBuilder.deleteCharAt(argumentStringBuilder.length()-1);
+			case "C" -> clearTextFeild(argumentStringBuilder);
+			case "BS" -> backspaceTextFeild(argumentStringBuilder);
 			case "+/-" -> replaceStringBuilderValue(argumentStringBuilder, this.nagateInputString(argumentStringBuilder.toString()));
 			case "=" -> replaceStringBuilderValue(argumentStringBuilder, this.evaluateExpression(argumentStringBuilder.toString()));
 			default -> new InvaildOperatorException();
 		}
 	}
-	
+
 	private String nagateInputString(String input) {
 		String output = "Still working on it";
 		return output;
