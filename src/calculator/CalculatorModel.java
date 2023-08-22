@@ -268,41 +268,20 @@ public class CalculatorModel {
 	 */
 	private void modularDivision(StringBuilder inputStringBuilder) {
 		
-		// Declaration
-		String value = null;
-		
 		// Getting values
 		String output = inputStringBuilder.toString();
 		String previousValue = this.previousValues.pop();
 		
-		// Checking for decimal values
-		boolean outputHasDecimalValue = hasDecimalValue(output);
-		boolean previousValueHasDecimalValue = hasDecimalValue(previousValue);
+		// Creating a lambda expression
+		ArithmeticOperation<Number> mod = (operand1, operand2) -> 
+			(operand1 instanceof Double || operand2 instanceof Double)
+	        	? operand1.doubleValue() % operand2.doubleValue()
+	        	: operand1.longValue() % operand2.longValue();
+	    
+		// Getting end result
+	    String value = executeOperation(previousValue, output, mod); 
 		
-		if(outputHasDecimalValue || previousValueHasDecimalValue) {
-			
-			// Parsing Values
-			double operand1 = Double.parseDouble(previousValue);
-			double operand2 = Double.parseDouble(output);
-			
-			// Getting the round value
-			double result = Math.round((operand1 % operand2) * 100.0)/100.0;
-			
-			// Final result
-			value = String.valueOf(result);
-		} else {
-			
-			// Parsing Values
-			long operand1 = Long.parseLong(previousValue);
-			long operand2 = Long.parseLong(output);
-			
-			// Getting the round value
-			long result = operand1 % operand2;
-			
-			// Final result
-			value = String.valueOf(result);
-		}
-		
+	    // Pushes back to Stack and cleans TextField
 		this.previousValues.push(value);
 		clearTextFeild(inputStringBuilder);
 	}
