@@ -17,11 +17,15 @@ import java.util.regex.Pattern;
  */
 public class CalculatorModel {
 	
+	private String previousValue;
+	
 	/**
 	 * Constructs a new CalculatorModel instance.
 	 * This constructor initializes any required data or resources.
 	 */
-	public CalculatorModel() {}
+	public CalculatorModel() {
+		this.previousValue = null;
+	}
 	
 	/**
 	 * This function returns all the children of given container.
@@ -78,7 +82,7 @@ public class CalculatorModel {
 	 * @return isVaild[boolean] : Returns true if it's numeric value else false
 	 */
 	public static boolean isNumericValue(String inputString) {
-		String regexForNumericValues = "^[0-9]*(\\.[0-9]*)?$";
+		String regexForNumericValues = "^\\-?[0-9]*(\\.[0-9]*)?$";
 		boolean isValid = matchesRegex(regexForNumericValues, inputString);
 		return isValid;
 	}
@@ -113,9 +117,13 @@ public class CalculatorModel {
 	 * @param inputStringBuilder
 	 * @return void
 	 */
-	private void negateInputString(StringBuilder inputStringBuilder) {
+	private static void negateInputString(StringBuilder inputStringBuilder) {
 		String output = inputStringBuilder.toString();
-		replaceStringBuilderValue(inputStringBuilder, output);
+		if(output.charAt(0) == '-') {
+			replaceStringBuilderValue(inputStringBuilder, output.substring(1));
+		} else {
+			inputStringBuilder.insert(0, "-");
+		}
 	}
 	
 	/**
@@ -196,7 +204,7 @@ public class CalculatorModel {
 		switch(operationName) {
 			case "C" -> clearTextFeild(argumentStringBuilder);
 			case "BS" -> backspaceTextFeild(argumentStringBuilder);
-			case "+/-" -> this.negateInputString(argumentStringBuilder);
+			case "+/-" -> negateInputString(argumentStringBuilder);
 			case "+" -> this.addition(argumentStringBuilder);
 			case "-" -> this.subtraction(argumentStringBuilder);
 			case "*" -> this.multiplication(argumentStringBuilder);
