@@ -127,17 +127,6 @@ public class CalculatorModel {
 	}
 	
 	/**
-	 * This method evaluates the current expression.
-	 * 
-	 * @param inputStringBuilder
-	 * @return void
-	 */
-	private void evaluateExpression(StringBuilder inputStringBuilder) {
-		String output = "Still working on it";
-		replaceStringBuilderValue(inputStringBuilder, output);
-	}
-	
-	/**
 	 * This method performs the addition operation.
 	 * 
 	 * @param inputStringBuilder
@@ -188,6 +177,17 @@ public class CalculatorModel {
 	 * @return void
 	 */
 	private void modularDivision(StringBuilder inputStringBuilder) {
+		String output = "Still working on it";
+		replaceStringBuilderValue(inputStringBuilder, output);
+	}
+	
+	/**
+	 * This method evaluates the current expression.
+	 * 
+	 * @param inputStringBuilder
+	 * @return void
+	 */
+	private void evaluateExpression(StringBuilder inputStringBuilder) {
 		String output = "Still working on it";
 		replaceStringBuilderValue(inputStringBuilder, output);
 	}
