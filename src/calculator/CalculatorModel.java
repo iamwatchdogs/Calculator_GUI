@@ -16,7 +16,7 @@ import java.util.regex.Pattern;
  *
  */
 public class CalculatorModel {
- 
+	
 	/**
 	 * Constructs a new CalculatorModel instance.
 	 * This constructor initializes any required data or resources.
@@ -113,8 +113,8 @@ public class CalculatorModel {
 	 * @param inputStringBuilder
 	 * @return void
 	 */
-	private static void negateInputString(StringBuilder inputStringBuilder) {
-		String output = "Still working on it";
+	private void negateInputString(StringBuilder inputStringBuilder) {
+		String output = inputStringBuilder.toString();
 		replaceStringBuilderValue(inputStringBuilder, output);
 	}
 	
@@ -124,7 +124,7 @@ public class CalculatorModel {
 	 * @param inputStringBuilder
 	 * @return void
 	 */
-	private static void evaluateExpression(StringBuilder inputStringBuilder) {
+	private void evaluateExpression(StringBuilder inputStringBuilder) {
 		String output = "Still working on it";
 		replaceStringBuilderValue(inputStringBuilder, output);
 	}
@@ -135,7 +135,7 @@ public class CalculatorModel {
 	 * @param inputStringBuilder
 	 * @return void
 	 */
-	private static void addition(StringBuilder inputStringBuilder) {
+	private void addition(StringBuilder inputStringBuilder) {
 		String output = "Still working on it";
 		replaceStringBuilderValue(inputStringBuilder, output);
 	}
@@ -146,7 +146,7 @@ public class CalculatorModel {
 	 * @param inputStringBuilder
 	 * @return void
 	 */
-	private static void subtraction(StringBuilder inputStringBuilder) {
+	private void subtraction(StringBuilder inputStringBuilder) {
 		String output = "Still working on it";
 		replaceStringBuilderValue(inputStringBuilder, output);
 	}
@@ -157,7 +157,7 @@ public class CalculatorModel {
 	 * @param inputStringBuilder
 	 * @return void
 	 */
-	private static void multiplication(StringBuilder inputStringBuilder) {
+	private void multiplication(StringBuilder inputStringBuilder) {
 		String output = "Still working on it";
 		replaceStringBuilderValue(inputStringBuilder, output);
 	}
@@ -168,7 +168,7 @@ public class CalculatorModel {
 	 * @param inputStringBuilder
 	 * @return void
 	 */
-	private static void division(StringBuilder inputStringBuilder) {
+	private void division(StringBuilder inputStringBuilder) {
 		String output = "Still working on it";
 		replaceStringBuilderValue(inputStringBuilder, output);
 	}
@@ -179,7 +179,7 @@ public class CalculatorModel {
 	 * @param inputStringBuilder
 	 * @return void
 	 */
-	private static void modularDivision(StringBuilder inputStringBuilder) {
+	private void modularDivision(StringBuilder inputStringBuilder) {
 		String output = "Still working on it";
 		replaceStringBuilderValue(inputStringBuilder, output);
 	}
@@ -196,13 +196,13 @@ public class CalculatorModel {
 		switch(operationName) {
 			case "C" -> clearTextFeild(argumentStringBuilder);
 			case "BS" -> backspaceTextFeild(argumentStringBuilder);
-			case "+/-" -> negateInputString(argumentStringBuilder);
-			case "+" -> addition(argumentStringBuilder);
-			case "-" -> subtraction(argumentStringBuilder);
-			case "*" -> multiplication(argumentStringBuilder);
-			case "/" -> division(argumentStringBuilder);
-			case "%" -> modularDivision(argumentStringBuilder);
-			case "=" -> evaluateExpression(argumentStringBuilder);
+			case "+/-" -> this.negateInputString(argumentStringBuilder);
+			case "+" -> this.addition(argumentStringBuilder);
+			case "-" -> this.subtraction(argumentStringBuilder);
+			case "*" -> this.multiplication(argumentStringBuilder);
+			case "/" -> this.division(argumentStringBuilder);
+			case "%" -> this.modularDivision(argumentStringBuilder);
+			case "=" -> this.evaluateExpression(argumentStringBuilder);
 			default -> new InvaildOperatorException();
 		}
 	}
