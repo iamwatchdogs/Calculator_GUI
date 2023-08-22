@@ -71,7 +71,7 @@ public class CalculatorController implements TextListener, ActionListener{
 		Button clickedButton = (Button)e.getSource();
 		
 		// Setting up regex parameters
-		String regex = "^C|BS|=|\\+|\\-|\\*|/|%$";
+		String regex = "^C|BS|=|\\+/\\-|\\+|\\-|\\*|/|%$";
 		String label = clickedButton.getLabel();
 		
 		// Evaluating regex
