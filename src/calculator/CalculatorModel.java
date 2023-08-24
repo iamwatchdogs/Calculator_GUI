@@ -22,7 +22,7 @@ public class CalculatorModel {
 	
 	// Private members
 	private List<String> expression;
-	private Stack<Character> operations;
+	private Stack<String> operations;
 	private Stack<String> values;
 	
 	/**
@@ -114,10 +114,10 @@ public class CalculatorModel {
 	 * 
 	 * @return void
 	 */
-	private void clearTextFeild(StringBuilder argumentStringBuilder) {
+	private void clearTextFeild(StringBuilder argumentStringBuilder, boolean forTextField) {
 		if(argumentStringBuilder.length() != 0)
 			argumentStringBuilder.delete(0, argumentStringBuilder.length());
-		this.expression.clear();
+		if(forTextField)	this.expression.clear();
 	}
 	
 	/**
@@ -153,7 +153,7 @@ public class CalculatorModel {
 	 * @param handleOperation : Lambda function to perform provided operation.
 	 * @return value : a String value representing the end result of the operation.
 	 */
-	private String executeOperation(ArithmeticOperation<Number> handleOperation) {
+	private String executeOperation(ArithmeticOperation handleOperation) {
 		
 		// Getting values
 		String operand2 = this.values.pop();
@@ -170,7 +170,7 @@ public class CalculatorModel {
 			double numericOperand2 = Double.parseDouble(operand2);
 			
 			// Getting the round value
-			double result = Math.round((Double)handleOperation.operation(numericOperand1, numericOperand2) * 100.0)/100.0;
+			double result = Math.round(handleOperation.operation(numericOperand1, numericOperand2).doubleValue() * 100.0)/100.0;
 			
 			// Final result
 			return String.valueOf(result);
@@ -181,7 +181,7 @@ public class CalculatorModel {
 		long numericOperand2 = Long.parseLong(operand2);
 		
 		// Getting the round value
-		long result = (Long)handleOperation.operation(numericOperand1, numericOperand2);
+		long result = handleOperation.operation(numericOperand1, numericOperand2).longValue();
 		
 		// Final result
 		return  String.valueOf(result);
@@ -199,7 +199,7 @@ public class CalculatorModel {
 		this.expression.add(output);
 		if(operator != null)
 			this.expression.add(operator);
-		clearTextFeild(inputStringBuilder);
+		clearTextFeild(inputStringBuilder, false);
 	}
 	
 	/**
@@ -208,11 +208,54 @@ public class CalculatorModel {
 	 * @param inputStringBuilder
 	 * @return void
 	 */
-	private void evaluateExpression(StringBuilder inputStringBuilder) {
+	private void evaluateExpression(StringBuilder inputStringBuilder) throws InvaildOperatorException {
+		
+		// Appending the last value before the evaluation
 		this.selecteArithmeticdOperation(inputStringBuilder, null);
-		String output = "";
-		for(String s: this.expression)	output += s;
-		replaceStringBuilderValue(inputStringBuilder, output);
+		
+		for(int index = 0; index < this.expression.size(); index++) {
+			
+			String value = this.expression.get(index);
+			
+			if(isNumericValue(value)) {
+				this.values.push(value);
+				continue;
+			} else if(matchesRegex("^\\+|\\-$",value)) {
+				this.operations.push(value);
+				continue;
+			}
+			
+			String operator = value;
+			value = this.expression.get(++index);
+			
+			this.values.push(value);
+			
+			ArithmeticOperation operation = null;
+			switch(operator) {
+				case "*" -> operation = (operand1, operand2)-> (operand1 instanceof Double || operand2 instanceof Double) ? operand1.doubleValue()*operand2.doubleValue() : operand1.longValue()*operand2.longValue();
+				case "/" -> operation = (operand1, operand2)-> (operand1 instanceof Double || operand2 instanceof Double) ? operand1.doubleValue()/operand2.doubleValue() : operand1.longValue()/operand2.longValue();
+				case "%" -> operation = (operand1, operand2)-> (operand1 instanceof Double || operand2 instanceof Double) ? operand1.doubleValue()%operand2.doubleValue() : operand1.longValue()%operand2.longValue();
+				default -> new InvaildOperatorException();
+			}
+			
+			String result = this.executeOperation(operation);
+			
+			this.values.push(result);
+		}
+		
+		while(!this.operations.isEmpty()) {
+			String operator = this.operations.pop();
+			ArithmeticOperation operation = null;
+			switch(operator) {
+				case "+" -> operation = (operand1, operand2)-> (operand1 instanceof Double || operand2 instanceof Double) ? operand1.doubleValue()+operand2.doubleValue() : operand1.longValue()+operand2.longValue();
+				case "-" -> operation = (operand1, operand2)-> (operand1 instanceof Double || operand2 instanceof Double) ? operand1.doubleValue()-operand2.doubleValue() : operand1.longValue()-operand2.longValue();
+				default -> new InvaildOperatorException();
+			}
+			String result = this.executeOperation(operation);
+			this.values.push(result);
+		}
+		
+		replaceStringBuilderValue(inputStringBuilder, this.values.pop());
 		this.expression.clear();
 	}
 	
@@ -227,7 +270,7 @@ public class CalculatorModel {
 	public void handleOperation(String operationName, StringBuilder argumentStringBuilder) throws Exception {
 		if(argumentStringBuilder.length() == 0)		return;
 		switch(operationName) {
-			case "C" -> clearTextFeild(argumentStringBuilder);
+			case "C" -> clearTextFeild(argumentStringBuilder, true);
 			case "BS" -> backspaceTextFeild(argumentStringBuilder);
 			case "+/-" -> negateInputString(argumentStringBuilder);
 			case "+" -> this.selecteArithmeticdOperation(argumentStringBuilder, operationName);
@@ -264,6 +307,6 @@ class InvaildOperatorException extends Exception{
  * 
  */
 @FunctionalInterface
-interface ArithmeticOperation <T extends Number> {
-	public T operation(T operand1, T operand2);
+interface ArithmeticOperation {
+	public Number operation(Number operand1, Number operand2);
 }
