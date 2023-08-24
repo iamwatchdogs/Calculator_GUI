@@ -114,9 +114,10 @@ public class CalculatorModel {
 	 * 
 	 * @return void
 	 */
-	private static void clearTextFeild(StringBuilder argumentStringBuilder) {
+	private void clearTextFeild(StringBuilder argumentStringBuilder) {
 		if(argumentStringBuilder.length() != 0)
 			argumentStringBuilder.delete(0, argumentStringBuilder.length());
+		this.expression.clear();
 	}
 	
 	/**
@@ -209,7 +210,8 @@ public class CalculatorModel {
 	 */
 	private void evaluateExpression(StringBuilder inputStringBuilder) {
 		this.selecteArithmeticdOperation(inputStringBuilder, null);
-		String output = this.expression.toString();
+		String output = "";
+		for(String s: this.expression)	output += s;
 		replaceStringBuilderValue(inputStringBuilder, output);
 		this.expression.clear();
 	}
