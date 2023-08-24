@@ -89,7 +89,8 @@ public class CalculatorModel {
 	 * This methods takes a String input and return true if it's possible numeric value else false.
 	 * 
 	 * @param inputString : Input string that need to be checked.
-	 * @return isVaild[boolean] : Returns true if it's numeric value else false
+	 * 
+	 * @return isVaild[boolean] : Returns true if it's numeric value else false.
 	 */
 	public static boolean isNumericValue(String inputString) {
 		String regexForNumericValues = "^\\-?[0-9]*(\\.[0-9]*)?$";
@@ -100,8 +101,9 @@ public class CalculatorModel {
 	/**
 	 * This methods take a String value and return true if the String has decimal value or not.
 	 * 
-	 * @param inputString
-	 * @return
+	 * @param inputString : Input string that need to be checked.
+	 * 
+	 * @return isVaild[boolean] : Returns true if it's numeric value else false.
 	 */
 	public static boolean hasDecimalValue(String inputString) {
 		String regexForCheckingDecimalPoint = "^[0-9]*\\.[0-9]*$";
@@ -112,14 +114,16 @@ public class CalculatorModel {
 	/**
 	 * This method clears the String value of the given StringBuilder.
 	 * 
-	 * @param argumentStringBuilder : a StringBuilder object containing data for the text field
+	 * @param argumentStringBuilder : a StringBuilder object containing data for the text field.
+	 * @param forTextField : boolean value that represents the origins of the method call.
 	 * 
 	 * @return void
 	 */
 	private void clearTextFeild(StringBuilder argumentStringBuilder, boolean forTextField) {
-		if(argumentStringBuilder.length() != 0)
+		if(argumentStringBuilder.length() != 0)		
 			argumentStringBuilder.delete(0, argumentStringBuilder.length());
-		if(forTextField)	this.expression.clear();
+		if(forTextField) 							
+			this.expression.clear();
 	}
 	
 	/**
@@ -138,6 +142,7 @@ public class CalculatorModel {
 	 * This method negates the value of given StringBuilder.
 	 * 
 	 * @param inputStringBuilder
+	 * 
 	 * @return void
 	 */
 	private static void negateInputString(StringBuilder inputStringBuilder) {
@@ -149,11 +154,19 @@ public class CalculatorModel {
 		}
 	}
 	
+	/**
+	 * This method returns true when the evaluated value is displayed or not.
+	 * 
+	 * @return hasDisplayedResult : returns true to denote the evaluated result has been displayed.
+	 */
 	public boolean hasDisplayedResult() {
+		
+		// Assigning false after knowing evaluated result as been displayed
 		if(this.hasDisplayedResult)	{
 			this.hasDisplayedResult = false;
 			return true;
 		}
+		
 		return this.hasDisplayedResult;
 	}	
 	
@@ -161,6 +174,7 @@ public class CalculatorModel {
 	 * This function executes the operation provided according the values passed to it.
 	 * 
 	 * @param handleOperation : Lambda function to perform provided operation.
+	 * 
 	 * @return value : a String value representing the end result of the operation.
 	 */
 	private String executeOperation(ArithmeticOperation handleOperation) {
@@ -173,6 +187,7 @@ public class CalculatorModel {
 		boolean operand1HasDecimalValue = hasDecimalValue(operand1);
 		boolean operand2HasDecimalValue = hasDecimalValue(operand2);
 		
+		// For decimal values only
 		if(operand1HasDecimalValue || operand2HasDecimalValue) {
 			
 			// Parsing Values
@@ -201,32 +216,43 @@ public class CalculatorModel {
 	 * Pushes the input TextField with operation into respective stacks.
 	 * 
 	 * @param inputStringBuilder : StringBuilder object of TextFeild
-	 * @param operator : String value of Operator
+	 * @param operator : String value of Operator.
+	 * 
 	 * @return void
 	 */
 	private void selecteArithmeticdOperation(StringBuilder inputStringBuilder, String operator) {
+		
+		// Retrieving and adding values into the expression
 		String output = inputStringBuilder.toString();
 		this.expression.add(output);
 		if(operator != null)
 			this.expression.add(operator);
+		
+		// Clearing TextFeild
 		clearTextFeild(inputStringBuilder, false);
 	}
 	
 	/**
 	 * This method evaluates the current expression.
 	 * 
-	 * @param inputStringBuilder
+	 * @param inputStringBuilder : a string builder object representing TextField object.
+	 * 
 	 * @return void
+	 * 
+	 * @throws InvaildOperatorExceptions
 	 */
 	private void evaluateExpression(StringBuilder inputStringBuilder) throws InvaildOperatorException {
 		
 		// Appending the last value before the evaluation
 		this.selecteArithmeticdOperation(inputStringBuilder, null);
 		
+		// Traversing the whole expression List and pushing into stack
 		for(int index = 0; index < this.expression.size(); index++) {
 			
+			// Retrieving value
 			String value = this.expression.get(index);
 			
+			// Handling the numeric and basic arithmetic (like add & subtract)
 			if(isNumericValue(value)) {
 				this.values.push(value);
 				continue;
@@ -235,11 +261,13 @@ public class CalculatorModel {
 				continue;
 			}
 			
+			// Retrieving value
 			String operator = value;
 			value = this.expression.get(++index);
 			
 			this.values.push(value);
 			
+			// Handling remaining arithmetic operations (like multiply, divide and modular division)
 			ArithmeticOperation operation = null;
 			switch(operator) {
 				case "*" -> operation = (operand1, operand2)-> (operand1 instanceof Double || operand2 instanceof Double) ? operand1.doubleValue()*operand2.doubleValue() : operand1.longValue()*operand2.longValue();
@@ -248,24 +276,34 @@ public class CalculatorModel {
 				default -> new InvaildOperatorException();
 			}
 			
-			String result = this.executeOperation(operation);
+			String result = this.executeOperation(operation);	// evaluating high precedence operators
 			
-			this.values.push(result);
+			this.values.push(result);							// pushing evaluated result back into stack
 		}
 		
+		// handling lower precedence operations
 		while(!this.operations.isEmpty()) {
+			
+			// Retrieving value
 			String operator = this.operations.pop();
+			
+			// Handling remaining arithmetic operations (like add and subtract)
 			ArithmeticOperation operation = null;
 			switch(operator) {
 				case "+" -> operation = (operand1, operand2)-> (operand1 instanceof Double || operand2 instanceof Double) ? operand1.doubleValue()+operand2.doubleValue() : operand1.longValue()+operand2.longValue();
 				case "-" -> operation = (operand1, operand2)-> (operand1 instanceof Double || operand2 instanceof Double) ? operand1.doubleValue()-operand2.doubleValue() : operand1.longValue()-operand2.longValue();
 				default -> new InvaildOperatorException();
 			}
+			
+			// Evaluate and pushing values
 			String result = this.executeOperation(operation);
 			this.values.push(result);
 		}
 		
+		// Returning final result of expression to TextFeild
 		replaceStringBuilderValue(inputStringBuilder, this.values.pop());
+		
+		// Clearing
 		this.expression.clear();
 		this.hasDisplayedResult = true;
 	}
@@ -277,6 +315,8 @@ public class CalculatorModel {
 	 * @param argumentString : User Input data.
 	 * 
 	 * @return void
+	 * 
+	 * @throws Exception
 	 */
 	public void handleOperation(String operationName, StringBuilder argumentStringBuilder) throws Exception {
 		if(argumentStringBuilder.length() == 0)		return;

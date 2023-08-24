@@ -24,9 +24,8 @@ public class CalculatorApplication {
 		CalculatorView view = new CalculatorView();
 		CalculatorModel model = new CalculatorModel();
 		
-		// Patching all together using a controller object
 		@SuppressWarnings("unused")
-		CalculatorController controller = new CalculatorController(view, model);
+		CalculatorController controller = new CalculatorController(view, model);	// Patching all together using a controller object
 		
 	}
 }
