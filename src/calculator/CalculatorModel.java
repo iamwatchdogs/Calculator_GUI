@@ -2,9 +2,9 @@ package calculator;
 
 import java.awt.Component;
 import java.awt.Container;
-import java.util.HashSet;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.HashSet;
 import java.util.List;
 import java.util.LinkedList;
 import java.util.Stack;
@@ -86,28 +86,24 @@ public class CalculatorModel {
 	}
 	
 	/**
-	 * This methods takes a String input and return true if it's possible numeric value else false.
+	 * This methods takes a String input and return true if it's possible numeric/decimal value or else false.
 	 * 
 	 * @param inputString : Input string that need to be checked.
+	 * @param checkOnlyForDecimalValue : a boolean value that decides the regex checking between numeric and decimal value.
 	 * 
 	 * @return isVaild[boolean] : Returns true if it's numeric value else false.
 	 */
-	public static boolean isNumericValue(String inputString) {
+	public static boolean isNumericValue(String inputString, boolean checkOnlyForDecimalValue) {
+		
+		// Regex for both numeric and decimal values
 		String regexForNumericValues = "^(\\-?[0-9]+(\\.[0-9]*)?)?$";
-		boolean isValid = matchesRegex(regexForNumericValues, inputString);
-		return isValid;
-	}
-	
-	/**
-	 * This methods take a String value and return true if the String has decimal value or not.
-	 * 
-	 * @param inputString : Input string that need to be checked.
-	 * 
-	 * @return isVaild[boolean] : Returns true if it's numeric value else false.
-	 */
-	public static boolean hasDecimalValue(String inputString) {
-		String regexForCheckingDecimalPoint = "^[0-9]*\\.[0-9]*$";
-		boolean isValid = matchesRegex(regexForCheckingDecimalPoint, inputString);
+		String regexForCheckingDecimalPoint = "^(\\-?[0-9]*\\.[0-9]*)?$";
+		
+		// Selecting regex for situation
+		String regex = (checkOnlyForDecimalValue) ? regexForCheckingDecimalPoint : regexForNumericValues;
+		
+		// Evaluating and returning boolean value
+		boolean isValid = matchesRegex(regex, inputString);
 		return isValid;
 	}
 	
@@ -189,8 +185,8 @@ public class CalculatorModel {
 		String operand1 = this.values.pop();
 		
 		// Checking for decimal values
-		boolean operand1HasDecimalValue = hasDecimalValue(operand1);
-		boolean operand2HasDecimalValue = hasDecimalValue(operand2);
+		boolean operand1HasDecimalValue = isNumericValue(operand1, true);
+		boolean operand2HasDecimalValue = isNumericValue(operand2, true);
 		
 		// Checking for zero division exception
 		if(matchesRegex("^0*(\\.?0*)?$",operand2))	throw new ArithmeticException("Divide by zero");
@@ -262,7 +258,7 @@ public class CalculatorModel {
 			String value = this.expression.get(index);
 			
 			// Handling the numeric and basic arithmetic (like add & subtract)
-			if(isNumericValue(value)) {
+			if(isNumericValue(value, false)) {
 				this.values.push(value);
 				continue;
 			} else if(matchesRegex("^\\+|\\-$",value)) {
@@ -361,7 +357,7 @@ class InvaildOperatorException extends Exception {
 }
 
 /**
- * Created for the usage of an generic lambda function.
+ * Created for designing custom lambda function for different Arithmetic Operation.
  * 
  * @author Shamith Nakka
  * @see CalculatorModel::executeOperation()

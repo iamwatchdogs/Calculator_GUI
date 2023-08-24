@@ -90,7 +90,7 @@ public class CalculatorController implements TextListener, ActionListener{
 			} catch(Exception exception) {															// Handling any other possible exception
 				exception.printStackTrace();
 			}
-		} else if(CalculatorModel.isNumericValue(this.textFieldCurrentText.toString() + label)){	// Check whether it's a numeric or not
+		} else if(CalculatorModel.isNumericValue(this.textFieldCurrentText.toString() + label, false)){	// Check whether it's a numeric or not
 			if(this.model.hasDisplayedResult())	{
 				this.textFieldCurrentText.delete(0, this.textFieldCurrentText.length());
 			}
@@ -114,7 +114,7 @@ public class CalculatorController implements TextListener, ActionListener{
 		String newInputText = textField.getText();
 		
 		// Checking whether it's numeric or not
-		boolean shouldUpdateCurrentText = CalculatorModel.isNumericValue(newInputText);
+		boolean shouldUpdateCurrentText = CalculatorModel.isNumericValue(newInputText, false);
 		
 		// Performing respective operation
 		if(shouldUpdateCurrentText) {
