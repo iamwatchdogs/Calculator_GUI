@@ -5,9 +5,31 @@ import java.awt.Container;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 import java.util.Stack;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+/**
+ * Created for designing custom lambda function for different Arithmetic Operation.
+ *
+ * @author Shamith Nakka
+ * @see CalculatorModel::executeOperation()
+ *
+ * @throws ArithmeticException
+ */
+@FunctionalInterface
+interface ArithmeticOperation {
+
+	/**
+	 *
+	 * @param operand1: Subclass object of Number.
+	 * @param operand2: Subclass object of Number.
+	 *
+	 * @return Subclass object of Number class through Reference Widening.
+	 */
+	public Number operation(Number operand1, Number operand2);
+}
 
 /**
  * This class represents the model in the MVC architecture for a calculator application.
@@ -21,10 +43,10 @@ import java.util.regex.Pattern;
 public class CalculatorModel {
 
 	// Private members
-	private List<String> expression;
-	private Stack<String> operations;
-	private Stack<String> values;
-	private boolean hasDisplayedResult;
+	final private List<String> expression;
+	final private Stack<String> operations;
+	final private Stack<String> values;
+	private boolean hasDisplayed;
 
 	/**
 	 * Constructs a new CalculatorModel instance.
@@ -34,7 +56,20 @@ public class CalculatorModel {
 		this.expression = new LinkedList<>();
 		this.operations = new Stack<>();
 		this.values = new Stack<>();
-		this.hasDisplayedResult = false;
+		this.hasDisplayed = false;
+	}
+
+	/**
+	 * This method removes the last character of the String value for the given StringBuilder.
+	 *
+	 * @param input : a StringBuilder object containing data for the text field.
+	 *
+	 * @return void
+	 */
+	private static void backspaceTextFeild(final StringBuilder input) {
+		if(input.length() != 0) {
+			input.deleteCharAt(input.length()-1);
+		}
 	}
 
 	/**
@@ -44,10 +79,10 @@ public class CalculatorModel {
 	 *
 	 * @return children[HashSet] : set of component children.
 	 */
-	public static HashSet<Component> getAllChildren(Container container) {
+	public static Set<Component> getAllChildren(final Container container) {
 
 		// Initialization
-		HashSet<Component> children = new HashSet<>();
+		final Set<Component> children = new HashSet<>();
 
 		// Retrieving Components
 		for(Component child : container.getComponents()) {
@@ -55,6 +90,27 @@ public class CalculatorModel {
 		}
 
 		return children;
+	}
+
+	/**
+	 * This methods takes a String input and return true if it's possible numeric/decimal value or else false.
+	 *
+	 * @param inputString : Input string that need to be checked.
+	 * @param checkOnlyForDecimalValue : a boolean value that decides the regex checking.
+	 *
+	 * @return isVaild[boolean] : Returns true if it's numeric value else false.
+	 */
+	public static boolean isNumericValue(final String inputString, final boolean checkOnlyForDecimalValue) {
+
+		// Regex for both numeric and decimal values
+		final String regexForNumericValues = "^(\\-?[0-9]+(\\.[0-9]*)?)?$";
+		final String regexForCheckingDecimalPoint = "^(\\-?[0-9]*\\.[0-9]*)?$";
+
+		// Selecting regex for situation
+		final String regex = checkOnlyForDecimalValue ? regexForCheckingDecimalPoint : regexForNumericValues;
+
+		// Evaluating and returning boolean value
+		return matchesRegex(regex, inputString);
 	}
 
 	/**
@@ -66,10 +122,30 @@ public class CalculatorModel {
 	 *
 	 * @return [boolean]: return true if given string matches given regex.
 	 */
-	public static boolean matchesRegex(String regex, String targetString) {
-		Pattern pattern = Pattern.compile(regex);
-		Matcher matcher = pattern.matcher(targetString);
+	public static boolean matchesRegex(final String regex, final String targetString) {
+		final Pattern pattern = Pattern.compile(regex);
+		final Matcher matcher = pattern.matcher(targetString);
 		return matcher.matches();
+	}
+
+	/**
+	 * This method negates the value of given StringBuilder.
+	 *
+	 * @param input : a StringBuilder object containing data for the text field
+	 *
+	 * @return void
+	 */
+	private static void negateInputString(final StringBuilder input) {
+
+		// Retrieving output
+		final String output = input.toString();
+
+		// Performing operation
+		if(output.charAt(0) == '-') {
+			replaceStringBuilderValue(input, output.substring(1));
+		} else {
+			input.insert(0, "-");
+		}
 	}
 
 	/**
@@ -81,159 +157,63 @@ public class CalculatorModel {
 	 *
 	 * @return void
 	 */
-	public static void replaceStringBuilderValue(StringBuilder stringBuilder, String stringValue) {
+	public static void replaceStringBuilderValue(final StringBuilder stringBuilder, final String stringValue) {
 		stringBuilder.replace(0, stringBuilder.length(), stringValue);
-	}
-
-	/**
-	 * This methods takes a String input and return true if it's possible numeric/decimal value or else false.
-	 *
-	 * @param inputString : Input string that need to be checked.
-	 * @param checkOnlyForDecimalValue : a boolean value that decides the regex checking between numeric and decimal value.
-	 *
-	 * @return isVaild[boolean] : Returns true if it's numeric value else false.
-	 */
-	public static boolean isNumericValue(String inputString, boolean checkOnlyForDecimalValue) {
-
-		// Regex for both numeric and decimal values
-		String regexForNumericValues = "^(\\-?[0-9]+(\\.[0-9]*)?)?$";
-		String regexForCheckingDecimalPoint = "^(\\-?[0-9]*\\.[0-9]*)?$";
-
-		// Selecting regex for situation
-		String regex = (checkOnlyForDecimalValue) ? regexForCheckingDecimalPoint : regexForNumericValues;
-
-		// Evaluating and returning boolean value
-		boolean isValid = matchesRegex(regex, inputString);
-		return isValid;
 	}
 
 	/**
 	 * This method clears the String value of the given StringBuilder.
 	 *
-	 * @param argumentStringBuilder : a StringBuilder object containing data for the text field.
+	 * @param inputSB : a StringBuilder object containing data for the text field.
 	 * @param forTextField : boolean value that represents the origins of the method call.
 	 *
 	 * @return void
 	 */
-	private void clearTextFeild(StringBuilder argumentStringBuilder, boolean forTextField) {
-		if(argumentStringBuilder.length() != 0)
-			argumentStringBuilder.delete(0, argumentStringBuilder.length());
+	private void clearTextFeild(final StringBuilder inputSB,final boolean forTextField) {
+		if(inputSB.length() != 0)
+			inputSB.delete(0, inputSB.length());
 		if(forTextField)
 			this.expression.clear();
 	}
 
 	/**
-	 * This method removes the last character of the String value for the given StringBuilder.
+	 * This method handles the operation based on the precedence.
 	 *
-	 * @param argumentStringBuilder : a StringBuilder object containing data for the text field
-	 *
-	 * @return void
-	 */
-	private static void backspaceTextFeild(StringBuilder argumentStringBuilder) {
-		if(argumentStringBuilder.length() != 0)
-			argumentStringBuilder.deleteCharAt(argumentStringBuilder.length()-1);
-	}
-
-	/**
-	 * This method negates the value of given StringBuilder.
-	 *
-	 * @param inputStringBuilder : a StringBuilder object containing data for the text field
+	 * @param operator : a String value representing operator.
+	 * @param isHighPrecedence : a boolean value to determine level of precedence
 	 *
 	 * @return void
-	 */
-	private static void negateInputString(StringBuilder inputStringBuilder) {
-		String output = inputStringBuilder.toString();
-		if(output.charAt(0) == '-') {
-			replaceStringBuilderValue(inputStringBuilder, output.substring(1));
-		} else {
-			inputStringBuilder.insert(0, "-");
-		}
-	}
-
-	/**
-	 * This method returns true when the evaluated value is displayed or not.
 	 *
-	 * @param Not Required.
-	 *
-	 * @return hasDisplayedResult : returns true to denote the evaluated result has been displayed.
-	 */
-	public boolean hasDisplayedResult() {
-
-		// Assigning false after knowing evaluated result as been displayed
-		if(this.hasDisplayedResult)	{
-			this.hasDisplayedResult = false;
-			return true;
-		}
-
-		return this.hasDisplayedResult;
-	}
-
-	/**
-	 * This function executes the operation provided according the values passed to it.
-	 *
-	 * @param handleOperation : Lambda function to perform provided operation.
-	 * @param isDivisionOperation : Special case for Division operation.
-	 *
-	 * @return value : a String value representing the end result of the operation.
-	 *
+	 * @throws InvaildOperatorException
 	 * @throws ArithmeticException
 	 */
-	private String executeOperation(ArithmeticOperation handleOperation, boolean isDivisionOperation) throws ArithmeticException {
+	private void handleOperationsBasedOnPrecedence(final String operator, final boolean isHighPrecedence)  throws InvaildOperatorException, ArithmeticException {
 
-		// Getting values
-		String operand2 = this.values.pop();
-		String operand1 = this.values.pop();
+		// Checking for division operation
+		boolean isDivision = false;
 
-		// Checking for decimal values
-		boolean operand1HasDecimalValue = isNumericValue(operand1, true);
-		boolean operand2HasDecimalValue = isNumericValue(operand2, true);
+		// Handling remaining arithmetic operations
+		ArithmeticOperation operation = null;
 
-		// Checking for zero division exception
-		if(matchesRegex("^0*(\\.?0*)?$",operand2))	throw new ArithmeticException("Divide by zero");
-
-		// For decimal values only
-		if(operand1HasDecimalValue || operand2HasDecimalValue || isDivisionOperation) {
-
-			// Parsing Values
-			double numericOperand1 = Double.parseDouble(operand1);
-			double numericOperand2 = Double.parseDouble(operand2);
-
-			// Getting the round value
-			double result = Math.round(handleOperation.operation(numericOperand1, numericOperand2).doubleValue() * 100.0)/100.0;
-
-			// Final result
-			return (isDivisionOperation && result == Math.round(result)) ? String.valueOf((long)result) : String.valueOf(result);
+		if(isHighPrecedence) {
+			switch(operator) {
+				case "*" -> operation = (operand1, operand2)-> (operand1 instanceof Double || operand2 instanceof Double) ? operand1.doubleValue()*operand2.doubleValue() : operand1.longValue()*operand2.longValue();
+				case "/" -> operation = (operand1, operand2)-> (operand1 instanceof Double || operand2 instanceof Double) ? operand1.doubleValue()/operand2.doubleValue() : operand1.longValue()/operand2.longValue();
+				case "%" -> operation = (operand1, operand2)-> (operand1 instanceof Double || operand2 instanceof Double) ? operand1.doubleValue()%operand2.doubleValue() : operand1.longValue()%operand2.longValue();
+				default -> new InvaildOperatorException();
+			}
+			isDivision = operator.equals("/");
+		} else {
+			switch(operator) {
+				case "+" -> operation = (operand1, operand2)-> (operand1 instanceof Double || operand2 instanceof Double) ? operand1.doubleValue()+operand2.doubleValue() : operand1.longValue()+operand2.longValue();
+				case "-" -> operation = (operand1, operand2)-> (operand1 instanceof Double || operand2 instanceof Double) ? operand1.doubleValue()-operand2.doubleValue() : operand1.longValue()-operand2.longValue();
+				default -> new InvaildOperatorException();
+			}
 		}
 
-		// Parsing Values
-		long numericOperand1 = Long.parseLong(operand1);
-		long numericOperand2 = Long.parseLong(operand2);
-
-		// Getting the round value
-		long result = handleOperation.operation(numericOperand1, numericOperand2).longValue();
-
-		// Final result
-		return  String.valueOf(result);
-	}
-
-	/**
-	 * Pushes the input TextField with operation into respective stacks.
-	 *
-	 * @param inputStringBuilder : StringBuilder object of TextFeild
-	 * @param operator : String value of Operator.
-	 *
-	 * @return void
-	 */
-	private void selecteArithmeticdOperation(StringBuilder inputStringBuilder, String operator) {
-
-		// Retrieving and adding values into the expression
-		String output = inputStringBuilder.toString();
-		this.expression.add(output);
-		if(operator != null)
-			this.expression.add(operator);
-
-		// Clearing TextFeild
-		clearTextFeild(inputStringBuilder, false);
+		// evaluating operators and pushes it back to stack
+		final String result = this.executeOperation(operation, isDivision);
+		this.values.push(result);
 	}
 
 	/**
@@ -246,7 +226,7 @@ public class CalculatorModel {
 	 * @throws InvaildOperatorExceptions
 	 * @throws ArithmeticException
 	 */
-	private void evaluateExpression(StringBuilder inputStringBuilder) throws InvaildOperatorException, ArithmeticException {
+	private void evaluateExpression(final StringBuilder inputStringBuilder) throws InvaildOperatorException, ArithmeticException {
 
 		// Appending the last value before the evaluation
 		this.selecteArithmeticdOperation(inputStringBuilder, null);
@@ -255,7 +235,7 @@ public class CalculatorModel {
 		for(int index = 0; index < this.expression.size(); index++) {
 
 			// Retrieving value
-			String value = this.expression.get(index);
+			final String value = this.expression.get(index);
 
 			// Handling the numeric and basic arithmetic (like add & subtract)
 			if(isNumericValue(value, false)) {
@@ -266,43 +246,22 @@ public class CalculatorModel {
 				continue;
 			}
 
-			// Retrieving value
-			String operator = value;
-			value = this.expression.get(++index);
+			// Adding the other operand before performing the operation..
+			this.values.push(this.expression.get(++index));
 
-			this.values.push(value);
+			// Performing High precedence operations
+			this.handleOperationsBasedOnPrecedence(value, true);
 
-			// Handling remaining arithmetic operations (like multiply, divide and modular division)
-			ArithmeticOperation operation = null;
-			switch(operator) {
-				case "*" -> operation = (operand1, operand2)-> (operand1 instanceof Double || operand2 instanceof Double) ? operand1.doubleValue()*operand2.doubleValue() : operand1.longValue()*operand2.longValue();
-				case "/" -> operation = (operand1, operand2)-> (operand1 instanceof Double || operand2 instanceof Double) ? operand1.doubleValue()/operand2.doubleValue() : operand1.longValue()/operand2.longValue();
-				case "%" -> operation = (operand1, operand2)-> (operand1 instanceof Double || operand2 instanceof Double) ? operand1.doubleValue()%operand2.doubleValue() : operand1.longValue()%operand2.longValue();
-				default -> new InvaildOperatorException();
-			}
-
-			String result = this.executeOperation(operation, operator.equals("/"));	// evaluating high precedence operators
-
-			this.values.push(result);												// pushing evaluated result back into stack
 		}
 
 		// handling lower precedence operations
 		while(!this.operations.isEmpty()) {
 
 			// Retrieving value
-			String operator = this.operations.pop();
+			final String operator = this.operations.pop();
 
-			// Handling remaining arithmetic operations (like add and subtract)
-			ArithmeticOperation operation = null;
-			switch(operator) {
-				case "+" -> operation = (operand1, operand2)-> (operand1 instanceof Double || operand2 instanceof Double) ? operand1.doubleValue()+operand2.doubleValue() : operand1.longValue()+operand2.longValue();
-				case "-" -> operation = (operand1, operand2)-> (operand1 instanceof Double || operand2 instanceof Double) ? operand1.doubleValue()-operand2.doubleValue() : operand1.longValue()-operand2.longValue();
-				default -> new InvaildOperatorException();
-			}
-
-			// Evaluate and pushing values
-			String result = this.executeOperation(operation, false);
-			this.values.push(result);
+			// Performing lower precedence operations
+			this.handleOperationsBasedOnPrecedence(operator, false);
 		}
 
 		// Returning final result of expression to TextFeild
@@ -310,7 +269,57 @@ public class CalculatorModel {
 
 		// Clearing
 		this.expression.clear();
-		this.hasDisplayedResult = true;
+		this.hasDisplayed = true;
+	}
+
+	/**
+	 * This function executes the operation provided according the values passed to it.
+	 *
+	 * @param handleOperation : Lambda function to perform provided operation.
+	 * @param isDivisionOperation : Special case for Division operation.
+	 *
+	 * @return value : a String value representing the end result of the operation.
+	 *
+	 * @throws ArithmeticException
+	 */
+	private String executeOperation(final ArithmeticOperation handleOperation, final boolean isDivisionOperation) throws ArithmeticException {
+
+		// Getting values
+		final String operand2 = this.values.pop();
+		final String operand1 = this.values.pop();
+
+		// Checking for decimal values
+		final boolean operand1HasDecimalValue = isNumericValue(operand1, true);
+		final boolean operand2HasDecimalValue = isNumericValue(operand2, true);
+
+		// Checking for zero division exception
+		if(matchesRegex("^0*(\\.?0*)?$",operand2)) {
+			throw new ArithmeticException("Divide by zero");
+		}
+
+		// For decimal values only
+		if(operand1HasDecimalValue || operand2HasDecimalValue || isDivisionOperation) {
+
+			// Parsing Values
+			final double numericOperand1 = Double.parseDouble(operand1);
+			final double numericOperand2 = Double.parseDouble(operand2);
+
+			// Getting the round value
+			final double result = Math.round(handleOperation.operation(numericOperand1, numericOperand2).doubleValue() * 100.0)/100.0;
+
+			// Final result
+			return (isDivisionOperation && result == Math.round(result)) ? String.valueOf((long)result) : String.valueOf(result);
+		}
+
+		// Parsing Values
+		final long numericOperand1 = Long.parseLong(operand1);
+		final long numericOperand2 = Long.parseLong(operand2);
+
+		// Getting the round value
+		final long result = handleOperation.operation(numericOperand1, numericOperand2).longValue();
+
+		// Final result
+		return  String.valueOf(result);
 	}
 
 	/**
@@ -324,7 +333,7 @@ public class CalculatorModel {
 	 * @throws InvaildOperatorException
 	 * @throws ArithmeticException
 	 */
-	public void handleOperation(String operationName, StringBuilder argumentStringBuilder) throws InvaildOperatorException, ArithmeticException {
+	public void handleOperation(final String operationName, final StringBuilder argumentStringBuilder) throws InvaildOperatorException, ArithmeticException {
 		if(argumentStringBuilder.length() == 0)		return;
 		switch(operationName) {
 			case "C" -> clearTextFeild(argumentStringBuilder, true);
@@ -339,6 +348,45 @@ public class CalculatorModel {
 			default -> new InvaildOperatorException();
 		}
 	}
+
+	/**
+	 * This method returns true when the evaluated value is displayed or not.
+	 *
+	 * @param Not Required.
+	 *
+	 * @return hasDisplayedResult : returns true to denote the evaluated result has been displayed.
+	 */
+	public boolean hasDisplayedResult() {
+
+		// Assigning false after knowing evaluated result as been displayed
+		if(this.hasDisplayed)	{
+			this.hasDisplayed = false;
+			return true;
+		}
+
+		return this.hasDisplayed;
+	}
+
+	/**
+	 * Pushes the input TextField with operation into respective stacks.
+	 *
+	 * @param inputStringBuilder : StringBuilder object of TextFeild
+	 * @param operator : String value of Operator.
+	 *
+	 * @return void
+	 */
+	private void selecteArithmeticdOperation(final StringBuilder inputStringBuilder, final String operator) {
+
+		// Retrieving and adding values into the expression
+		final String output = inputStringBuilder.toString();
+		this.expression.add(output);
+		if(operator != null) {
+			this.expression.add(operator);
+		}
+
+		// Clearing TextFeild
+		clearTextFeild(inputStringBuilder, false);
+	}
 }
 
 /**
@@ -350,21 +398,9 @@ public class CalculatorModel {
  */
 @SuppressWarnings("serial")
 class InvaildOperatorException extends Exception {
+
 	@Override
 	public String toString() {
 		return "Invaild OperationName value.";
 	}
-}
-
-/**
- * Created for designing custom lambda function for different Arithmetic Operation.
- *
- * @author Shamith Nakka
- * @see CalculatorModel::executeOperation()
- *
- * @throws ArithmeticException
- */
-@FunctionalInterface
-interface ArithmeticOperation {
-	public Number operation(Number operand1, Number operand2) throws ArithmeticException;
 }

@@ -15,7 +15,7 @@ import java.awt.TextField;
 import java.awt.Toolkit;
 
 /**
- * This class represents the model in the MVC architecture for a calculator application.
+ * This class represents the model in the MVC architecture.
  * It handles the GUI part of the application.
  *
  * @author Shamith Nakka
@@ -26,10 +26,11 @@ import java.awt.Toolkit;
 @SuppressWarnings("serial")
 public class CalculatorView extends Frame implements Keypad {
 
-	protected final Panel keypad;
-	protected final TextField textField;
+	// Member declarations
 	private final Font globalFont;
 	private final Image icon;
+	protected final Panel keypad;
+	protected final TextField textField;
 
 
 	/**
@@ -38,8 +39,11 @@ public class CalculatorView extends Frame implements Keypad {
 	 */
 	public CalculatorView() {
 
+		// Initializing through super class constructor
+		super("Calculator");
+
 		// Initialization
-		this.keypad = createKeypad();
+		this.keypad = this.createKeypad();
 		this.textField = new TextField();
 		this.globalFont = new Font("Arial", Font.PLAIN, 30);
 		this.icon = Toolkit.getDefaultToolkit().getImage(this.getIconLocation());
@@ -58,7 +62,6 @@ public class CalculatorView extends Frame implements Keypad {
 		this.setSize(400, 600);
 		this.setVisible(true);
 		this.setBackground(new Color(24, 24, 24));
-		this.setTitle("Calculator");
 		this.setIconImage(icon);
 		this.setResizable(false);
 	}
@@ -76,10 +79,10 @@ public class CalculatorView extends Frame implements Keypad {
 	 * @return void
 	 *
 	 */
-	private void addComponentsToView(Component component, int gridx, int gridy,  int weightx, int weighty, int [] padding) {
+	private void addComponentsToView(final Component component, final int gridx, final int gridy,  final int weightx, final int weighty, final int... padding) {
 
 		// Initialization
-		GridBagConstraints gridBagConstraints = new GridBagConstraints();
+		final GridBagConstraints gridBagConstraints = new GridBagConstraints();
 
 		// Setting component's grid coordinates
 		gridBagConstraints.gridx = gridx;
@@ -119,6 +122,37 @@ public class CalculatorView extends Frame implements Keypad {
 		return absolutePathToIcon;
 	}
 
+	/**
+	 * This function returns a java.awt.Panel object that contains
+	 * all the buttons required for a simple calculator.
+	 *
+	 * @param Not Required.
+	 *
+	 * @return keypad[java.awt.Panel] : Panel object.
+	 *
+	 */
+	@Override
+	public final Panel createKeypad(){
+
+			// Initialization
+			final Panel keypad = new Panel();
+			keypad.setName("Keypad");
+
+			// Setting Grid Layout
+			keypad.setLayout(new GridLayout(5,4));
+
+			// Adding buttons to the keypad Panel
+			for(String buttonName: DEFAULT_BUTTON_LABELS) {
+				Button button = new Button(buttonName);
+				button.setBackground(new Color(64,64,64));		// Setting Background Color
+				button.setForeground(new Color(255,255,255));	// Setting Font(Foreground) color
+				button.setName(buttonName);
+				keypad.add(button);
+			}
+
+			return keypad;
+		}
+
 }
 
 /**
@@ -131,7 +165,8 @@ public class CalculatorView extends Frame implements Keypad {
  */
 interface Keypad {
 
-	public final String [] BUTTON_LABLES = {
+	// Default values of the keypad
+	public String [] DEFAULT_BUTTON_LABELS = {
 			"%", "/", "C", "BS",
 			"7", "8", "9", "*",
 			"4", "5", "6", "-",
@@ -139,33 +174,15 @@ interface Keypad {
 			"+/-", "0", ".", "="
 	   };
 
+
 	/**
 	 * This function returns a java.awt.Panel object that contains
-	 * all the buttons required for a simple calculator.
+	 * all the buttons required.
 	 *
 	 * @param Not Required.
 	 *
 	 * @return keypad[java.awt.Panel] : Panel object.
 	 *
 	 */
-	default Panel createKeypad() {
-
-		// Initialization
-		Panel keypad = new Panel();
-		keypad.setName("Keypad");
-
-		// Setting Grid Layout
-		keypad.setLayout(new GridLayout(5,4));
-
-		// Adding buttons to the keypad Panel
-		for(String buttonName: BUTTON_LABLES) {
-			Button button = new Button(buttonName);
-			button.setBackground(new Color(64,64,64));		// Setting Background Color
-			button.setForeground(new Color(255,255,255));	// Setting Font(Foreground) color
-			button.setName(buttonName);
-			keypad.add(button);
-		}
-
-		return keypad;
-	}
+	Panel createKeypad();
 }

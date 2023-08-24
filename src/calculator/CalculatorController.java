@@ -22,8 +22,8 @@ public class CalculatorController implements TextListener, ActionListener{
 
 	// Saving their references to increase their scope for other methods
 	private final CalculatorModel model;
-	private final CalculatorView view;
 	private StringBuilder textFieldCurrentText;
+	private final CalculatorView view;
 
 	/**
 	 * Constructs a new CalculatorModel instance.
@@ -37,7 +37,7 @@ public class CalculatorController implements TextListener, ActionListener{
 	 * Constructs a new CalculatorModel instance.
 	 * This constructor initializes with provided data or resources.
 	 */
-	public CalculatorController(CalculatorView view, CalculatorModel model){
+	public CalculatorController(final CalculatorView view, final CalculatorModel model){
 
 		// Initialization
 		this.model = model;
@@ -54,7 +54,7 @@ public class CalculatorController implements TextListener, ActionListener{
 		// windows listener to close the application
 		view.addWindowListener( new WindowAdapter() {
 			@Override
-			public void windowClosing(WindowEvent e) {
+			public void windowClosing(WindowEvent event) {
 				view.dispose();
 			}
 		});
@@ -65,17 +65,17 @@ public class CalculatorController implements TextListener, ActionListener{
 	 *
 	 */
 	@Override
-	public void actionPerformed(ActionEvent e) {
+	public void actionPerformed(ActionEvent event) {
 
 		// Type-casted the event source into triggering Button object
-		Button clickedButton = (Button)e.getSource();
+		final Button clickedButton = (Button)event.getSource();
 
 		// Setting up regex parameters
-		String regex = "^C|BS|=|\\+/\\-|\\+|\\-|\\*|/|%$";
-		String label = clickedButton.getLabel();
+		final String regex = "^C|BS|=|\\+/\\-|\\+|\\-|\\*|/|%$";
+		final String label = clickedButton.getLabel();
 
 		// Evaluating regex
-		boolean shouldPerformOperation = CalculatorModel.matchesRegex(regex, label);
+		final boolean shouldPerformOperation = CalculatorModel.matchesRegex(regex, label);
 
 		// Performing respective operation
 		if(shouldPerformOperation) {
@@ -87,8 +87,6 @@ public class CalculatorController implements TextListener, ActionListener{
 				System.err.println(exception);
 				this.textFieldCurrentText.delete(0, this.textFieldCurrentText.length());
 				this.textFieldCurrentText.append("ERROR");
-			} catch(Exception exception) {															// Handling any other possible exception
-				exception.printStackTrace();
 			}
 		} else if(CalculatorModel.isNumericValue(this.textFieldCurrentText.toString() + label, false)){	// Check whether it's a numeric or not
 			if(this.model.hasDisplayedResult())	{
@@ -105,16 +103,16 @@ public class CalculatorController implements TextListener, ActionListener{
 	 *
 	 */
 	@Override
-	public void textValueChanged(TextEvent e) {
+	public void textValueChanged(TextEvent event) {
 
 		// Initialization
-		TextField textField = this.view.textField;
+		final TextField textField = this.view.textField;
 
 		// Setting up regex parameters
-		String newInputText = textField.getText();
+		final String newInputText = textField.getText();
 
 		// Checking whether it's numeric or not
-		boolean shouldUpdateCurrentText = CalculatorModel.isNumericValue(newInputText, false);
+		final boolean shouldUpdateCurrentText = CalculatorModel.isNumericValue(newInputText, false);
 
 		// Performing respective operation
 		if(shouldUpdateCurrentText) {
