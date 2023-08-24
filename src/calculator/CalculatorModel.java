@@ -141,7 +141,7 @@ public class CalculatorModel {
 	/**
 	 * This method negates the value of given StringBuilder.
 	 * 
-	 * @param inputStringBuilder
+	 * @param inputStringBuilder : a StringBuilder object containing data for the text field
 	 * 
 	 * @return void
 	 */
@@ -156,6 +156,8 @@ public class CalculatorModel {
 	
 	/**
 	 * This method returns true when the evaluated value is displayed or not.
+	 * 
+	 * @param Not Required.
 	 * 
 	 * @return hasDisplayedResult : returns true to denote the evaluated result has been displayed.
 	 */
@@ -285,7 +287,7 @@ public class CalculatorModel {
 			
 			String result = this.executeOperation(operation, operator.equals("/"));	// evaluating high precedence operators
 			
-			this.values.push(result);							// pushing evaluated result back into stack
+			this.values.push(result);												// pushing evaluated result back into stack
 		}
 		
 		// handling lower precedence operations

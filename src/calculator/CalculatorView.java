@@ -122,7 +122,7 @@ public class CalculatorView extends Frame implements Keypad {
 }
 
 /**
- * This Interface the keypad for the calculator.
+ * This Interface will design the keypad for the calculator.
  * 
  * @author Shamith Nakka
  * @version 1.0.0
@@ -143,7 +143,7 @@ interface Keypad {
 	 * This function returns a java.awt.Panel object that contains
 	 * all the buttons required for a simple calculator.
 	 * 
-	 * @param No Parameter required.
+	 * @param Not Required.
 	 * 
 	 * @return keypad[java.awt.Panel] : Panel object.
 	 * 
