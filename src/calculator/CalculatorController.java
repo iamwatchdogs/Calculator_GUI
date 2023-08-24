@@ -81,10 +81,14 @@ public class CalculatorController implements TextListener, ActionListener{
 		if(shouldPerformOperation) {
 			try {
 				this.model.handleOperation(label, textFieldCurrentText);
-			} catch(InvaildOperatorException exception) {
-				System.out.println(exception + "\nCheck the regex on actionPerform() method");		// Will convert to pop up (if possible)
-			}catch(Exception exception) {
-				exception.printStackTrace();	// Handling any other possible exception
+			} catch(InvaildOperatorException exception) {											// Handling operator exception (For developers)
+				System.err.println(exception + "\nCheck the regex on actionPerform() method");
+			} catch(ArithmeticException exception) {												// Handling ArithmeticException
+				System.err.println(exception);
+				this.textFieldCurrentText.delete(0, this.textFieldCurrentText.length());
+				this.textFieldCurrentText.append("ERROR");
+			} catch(Exception exception) {															// Handling any other possible exception
+				exception.printStackTrace();
 			}
 		} else if(CalculatorModel.isNumericValue(this.textFieldCurrentText.toString() + label)){	// Check whether it's a numeric or not
 			if(this.model.hasDisplayedResult())	{

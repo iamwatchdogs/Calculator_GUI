@@ -176,8 +176,10 @@ public class CalculatorModel {
 	 * @param handleOperation : Lambda function to perform provided operation.
 	 * 
 	 * @return value : a String value representing the end result of the operation.
+	 * 
+	 * @throws ArithmeticException
 	 */
-	private String executeOperation(ArithmeticOperation handleOperation) {
+	private String executeOperation(ArithmeticOperation handleOperation) throws ArithmeticException {
 		
 		// Getting values
 		String operand2 = this.values.pop();
@@ -240,8 +242,9 @@ public class CalculatorModel {
 	 * @return void
 	 * 
 	 * @throws InvaildOperatorExceptions
+	 * @throws ArithmeticException
 	 */
-	private void evaluateExpression(StringBuilder inputStringBuilder) throws InvaildOperatorException {
+	private void evaluateExpression(StringBuilder inputStringBuilder) throws InvaildOperatorException, ArithmeticException {
 		
 		// Appending the last value before the evaluation
 		this.selecteArithmeticdOperation(inputStringBuilder, null);
@@ -316,9 +319,10 @@ public class CalculatorModel {
 	 * 
 	 * @return void
 	 * 
-	 * @throws Exception
+	 * @throws InvaildOperatorException
+	 * @throws ArithmeticException
 	 */
-	public void handleOperation(String operationName, StringBuilder argumentStringBuilder) throws Exception {
+	public void handleOperation(String operationName, StringBuilder argumentStringBuilder) throws InvaildOperatorException, ArithmeticException {
 		if(argumentStringBuilder.length() == 0)		return;
 		switch(operationName) {
 			case "C" -> clearTextFeild(argumentStringBuilder, true);
@@ -343,7 +347,7 @@ public class CalculatorModel {
  *
  */
 @SuppressWarnings("serial")
-class InvaildOperatorException extends Exception{
+class InvaildOperatorException extends Exception {
 	@Override
 	public String toString() {
 		return "Invaild OperationName value.";
@@ -356,8 +360,9 @@ class InvaildOperatorException extends Exception{
  * @author Shamith Nakka
  * @see CalculatorModel::executeOperation()
  * 
+ * @throws ArithmeticException
  */
 @FunctionalInterface
 interface ArithmeticOperation {
-	public Number operation(Number operand1, Number operand2);
+	public Number operation(Number operand1, Number operand2) throws ArithmeticException;
 }
