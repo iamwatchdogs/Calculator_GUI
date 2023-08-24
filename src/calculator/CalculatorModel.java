@@ -24,6 +24,7 @@ public class CalculatorModel {
 	private List<String> expression;
 	private Stack<String> operations;
 	private Stack<String> values;
+	private boolean hasDisplayedResult;
 	
 	/**
 	 * Constructs a new CalculatorModel instance.
@@ -33,6 +34,7 @@ public class CalculatorModel {
 		this.expression = new LinkedList<>();
 		this.operations = new Stack<>();
 		this.values = new Stack<>();
+		this.hasDisplayedResult = false;
 	}
 	
 	/**
@@ -147,6 +149,14 @@ public class CalculatorModel {
 		}
 	}
 	
+	public boolean hasDisplayedResult() {
+		if(this.hasDisplayedResult)	{
+			this.hasDisplayedResult = false;
+			return true;
+		}
+		return this.hasDisplayedResult;
+	}	
+	
 	/**
 	 * This function executes the operation provided according the values passed to it.
 	 * 
@@ -257,6 +267,7 @@ public class CalculatorModel {
 		
 		replaceStringBuilderValue(inputStringBuilder, this.values.pop());
 		this.expression.clear();
+		this.hasDisplayedResult = true;
 	}
 	
 	/**

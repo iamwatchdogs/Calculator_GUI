@@ -87,6 +87,9 @@ public class CalculatorController implements TextListener, ActionListener{
 				exception.printStackTrace();	// Handling any other possible exception
 			}
 		} else if(CalculatorModel.isNumericValue(this.textFieldCurrentText.toString() + label)){	// Check whether it's a numeric or not
+			if(this.model.hasDisplayedResult())	{
+				this.textFieldCurrentText.delete(0, this.textFieldCurrentText.length());
+			}
 			this.textFieldCurrentText.append(label);
 		}
 		this.view.textField.setText(this.textFieldCurrentText.toString());
