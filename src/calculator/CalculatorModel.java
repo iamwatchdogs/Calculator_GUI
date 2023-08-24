@@ -93,7 +93,7 @@ public class CalculatorModel {
 	 * @return isVaild[boolean] : Returns true if it's numeric value else false.
 	 */
 	public static boolean isNumericValue(String inputString) {
-		String regexForNumericValues = "^\\-?[0-9]*(\\.[0-9]*)?$";
+		String regexForNumericValues = "^(\\-?[0-9]+(\\.[0-9]*)?)?$";
 		boolean isValid = matchesRegex(regexForNumericValues, inputString);
 		return isValid;
 	}
