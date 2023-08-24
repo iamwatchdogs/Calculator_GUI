@@ -189,6 +189,9 @@ public class CalculatorModel {
 		boolean operand1HasDecimalValue = hasDecimalValue(operand1);
 		boolean operand2HasDecimalValue = hasDecimalValue(operand2);
 		
+		// Checking for zero division exception
+		if(matchesRegex("^0*(\\.?0*)?$",operand2))	throw new ArithmeticException("Divide by zero");
+		
 		// For decimal values only
 		if(operand1HasDecimalValue || operand2HasDecimalValue) {
 			
