@@ -196,7 +196,8 @@ public class CalculatorModel {
 	private void selecteArithmeticdOperation(StringBuilder inputStringBuilder, String operator) {
 		String output = inputStringBuilder.toString();
 		this.expression.add(output);
-		this.expression.add(operator);
+		if(operator != null)
+			this.expression.add(operator);
 		clearTextFeild(inputStringBuilder);
 	}
 	
@@ -207,8 +208,10 @@ public class CalculatorModel {
 	 * @return void
 	 */
 	private void evaluateExpression(StringBuilder inputStringBuilder) {
-		String output = inputStringBuilder.toString();
+		this.selecteArithmeticdOperation(inputStringBuilder, null);
+		String output = this.expression.toString();
 		replaceStringBuilderValue(inputStringBuilder, output);
+		this.expression.clear();
 	}
 	
 	/**
