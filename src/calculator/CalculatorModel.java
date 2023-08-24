@@ -5,6 +5,8 @@ import java.awt.Container;
 import java.util.HashSet;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.List;
+import java.util.LinkedList;
 import java.util.Stack;
 
 /**
@@ -19,16 +21,18 @@ import java.util.Stack;
 public class CalculatorModel {
 	
 	// Private members
-	private Stack<String> previousValues;
-	private Stack<String> operations;
+	private List<String> expression;
+	private Stack<Character> operations;
+	private Stack<String> values;
 	
 	/**
 	 * Constructs a new CalculatorModel instance.
 	 * This constructor initializes any required data or resources.
 	 */
 	public CalculatorModel() {
-		this.previousValues = new Stack<>();
+		this.expression = new LinkedList<>();
 		this.operations = new Stack<>();
+		this.values = new Stack<>();
 	}
 	
 	/**
@@ -145,14 +149,14 @@ public class CalculatorModel {
 	/**
 	 * This function executes the operation provided according the values passed to it.
 	 * 
-	 * @param operand1 : a String value representing an numeric value.
-	 * @param operand2 : another String value representing an numeric value.
 	 * @param handleOperation : Lambda function to perform provided operation.
 	 * @return value : a String value representing the end result of the operation.
 	 */
-	private static String executeOperation(String operand1, String operand2, ArithmeticOperation<Number> handleOperation) {
+	private String executeOperation(ArithmeticOperation<Number> handleOperation) {
 		
-		String value = null;
+		// Getting values
+		String operand2 = this.values.pop();
+		String operand1 = this.values.pop();
 		
 		// Checking for decimal values
 		boolean operand1HasDecimalValue = hasDecimalValue(operand1);
@@ -168,21 +172,18 @@ public class CalculatorModel {
 			double result = Math.round((Double)handleOperation.operation(numericOperand1, numericOperand2) * 100.0)/100.0;
 			
 			// Final result
-			value = String.valueOf(result);
-		} else {
-			
-			// Parsing Values
-			long numericOperand1 = Long.parseLong(operand1);
-			long numericOperand2 = Long.parseLong(operand2);
-			
-			// Getting the round value
-			long result = (Long)handleOperation.operation(numericOperand1, numericOperand2);
-			
-			// Final result
-			value = String.valueOf(result);
+			return String.valueOf(result);
 		}
+
+		// Parsing Values
+		long numericOperand1 = Long.parseLong(operand1);
+		long numericOperand2 = Long.parseLong(operand2);
 		
-		return value;
+		// Getting the round value
+		long result = (Long)handleOperation.operation(numericOperand1, numericOperand2);
+		
+		// Final result
+		return  String.valueOf(result);
 	}
 	
 	/**
@@ -194,8 +195,8 @@ public class CalculatorModel {
 	 */
 	private void selecteArithmeticdOperation(StringBuilder inputStringBuilder, String operator) {
 		String output = inputStringBuilder.toString();
-		this.previousValues.push(output);
-		this.operations.push(operator);
+		this.expression.add(output);
+		this.expression.add(operator);
 		clearTextFeild(inputStringBuilder);
 	}
 	
@@ -206,7 +207,7 @@ public class CalculatorModel {
 	 * @return void
 	 */
 	private void evaluateExpression(StringBuilder inputStringBuilder) {
-		String output = "Still working on it";
+		String output = inputStringBuilder.toString();
 		replaceStringBuilderValue(inputStringBuilder, output);
 	}
 	
