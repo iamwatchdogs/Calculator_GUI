@@ -14,7 +14,7 @@ import java.util.regex.Pattern;
  * Created for designing custom lambda function for different Arithmetic Operation.
  *
  * @author Shamith Nakka
- * For more details, see {@link CalculatorModel#executeOperation()}.
+ * Demonstrates the usage of {@link #executeOperation()}.
  *
  */
 @FunctionalInterface
@@ -317,7 +317,7 @@ public class CalculatorModel {
 	 * This method will handle all the special operation of the calculator.
 	 *
 	 * @param operationName : Defines the type of operation.
-	 * @param argumentString : User Input data.
+	 * @param argumentStringBuilder : User Input data.
 	 *
 	 * @throws InvaildOperatorException If any other option is selected that the one defined.
 	 * @throws ArithmeticException To handle the "Division by zero" case.
@@ -379,7 +379,7 @@ public class CalculatorModel {
  * Created for handling the unexpected operationName value.
  *
  * @author Shamith Nakka
- * For more details, see {@link CalculatorModel#handleOperation()}
+ * Demonstrates the usage of {@link #handleOperation()}.
  *
  */
 @SuppressWarnings("serial")

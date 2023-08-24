@@ -20,7 +20,7 @@ import java.awt.Toolkit;
  *
  * @author Shamith Nakka
  * @version 1.0.0
- * @since 12 Aug 2023
+ * @since 24 Aug 2023
  *
  */
 @SuppressWarnings("serial")
@@ -154,12 +154,14 @@ public class CalculatorView extends Frame implements Keypad {
  *
  * @author Shamith Nakka
  * @version 1.0.0
- * @since 12 Aug 2023
+ * @since 24 Aug 2023
  *
  */
 interface Keypad {
 
-	// Default values of the keypad
+	/**
+	 *  Default values of the keypad.
+	 */
 	public String [] DEFAULT_BUTTON_LABELS = {
 			"%", "/", "C", "BS",
 			"7", "8", "9", "*",
