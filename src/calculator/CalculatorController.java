@@ -1,7 +1,7 @@
 package calculator;
 
-import java.awt.TextField;
 import java.awt.Button;
+import java.awt.TextField;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.TextEvent;
@@ -12,19 +12,19 @@ import java.awt.event.WindowEvent;
 /**
  * This class represents the controller in the MVC architecture for a calculator application.
  * It handles all the listener event from view and perform operation using model.
- * 
+ *
  * @author Shamith Nakka
  * @version 1.0.0
  * @since 24 Aug 2023
  *
  */
 public class CalculatorController implements TextListener, ActionListener{
-	
+
 	// Saving their references to increase their scope for other methods
 	private final CalculatorModel model;
 	private final CalculatorView view;
 	private StringBuilder textFieldCurrentText;
-	
+
 	/**
 	 * Constructs a new CalculatorModel instance.
 	 * This constructor initializes any required data or resources.
@@ -32,25 +32,25 @@ public class CalculatorController implements TextListener, ActionListener{
 	public CalculatorController(){
 		this(new CalculatorView(), new CalculatorModel());
 	}
-	
+
 	/**
 	 * Constructs a new CalculatorModel instance.
 	 * This constructor initializes with provided data or resources.
 	 */
 	public CalculatorController(CalculatorView view, CalculatorModel model){
-		
+
 		// Initialization
 		this.model = model;
 		this.view = view;
 		this.textFieldCurrentText = new StringBuilder();
-				
+
 		// Register the components with the listener
 		CalculatorModel.getAllChildren(view.keypad).forEach((button)->{
 			((Button)button).addActionListener(this);
 		});
-		
+
 		view.textField.addTextListener(this);
-		
+
 		// windows listener to close the application
 		view.addWindowListener( new WindowAdapter() {
 			@Override
@@ -62,21 +62,21 @@ public class CalculatorController implements TextListener, ActionListener{
 
 	/**
  	 * This is an event-handler will handle all the button events.
-	 * 
+	 *
 	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		
+
 		// Type-casted the event source into triggering Button object
 		Button clickedButton = (Button)e.getSource();
-		
+
 		// Setting up regex parameters
 		String regex = "^C|BS|=|\\+/\\-|\\+|\\-|\\*|/|%$";
 		String label = clickedButton.getLabel();
-		
+
 		// Evaluating regex
 		boolean shouldPerformOperation = CalculatorModel.matchesRegex(regex, label);
-		
+
 		// Performing respective operation
 		if(shouldPerformOperation) {
 			try {
@@ -102,20 +102,20 @@ public class CalculatorController implements TextListener, ActionListener{
 	/**
 	 * This is an event-handler that make sure only numeric character
 	 * are present within the text field.
-	 * 
+	 *
 	 */
 	@Override
 	public void textValueChanged(TextEvent e) {
-		
+
 		// Initialization
 		TextField textField = this.view.textField;
-		
+
 		// Setting up regex parameters
 		String newInputText = textField.getText();
-		
+
 		// Checking whether it's numeric or not
 		boolean shouldUpdateCurrentText = CalculatorModel.isNumericValue(newInputText, false);
-		
+
 		// Performing respective operation
 		if(shouldUpdateCurrentText) {
 			CalculatorModel.replaceStringBuilderValue(textFieldCurrentText, newInputText);
