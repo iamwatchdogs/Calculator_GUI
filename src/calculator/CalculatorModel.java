@@ -174,12 +174,13 @@ public class CalculatorModel {
 	 * This function executes the operation provided according the values passed to it.
 	 * 
 	 * @param handleOperation : Lambda function to perform provided operation.
+	 * @param isDivisionOperation : Special case for Division operation.
 	 * 
 	 * @return value : a String value representing the end result of the operation.
 	 * 
 	 * @throws ArithmeticException
 	 */
-	private String executeOperation(ArithmeticOperation handleOperation) throws ArithmeticException {
+	private String executeOperation(ArithmeticOperation handleOperation, boolean isDivisionOperation) throws ArithmeticException {
 		
 		// Getting values
 		String operand2 = this.values.pop();
@@ -193,7 +194,7 @@ public class CalculatorModel {
 		if(matchesRegex("^0*(\\.?0*)?$",operand2))	throw new ArithmeticException("Divide by zero");
 		
 		// For decimal values only
-		if(operand1HasDecimalValue || operand2HasDecimalValue) {
+		if(operand1HasDecimalValue || operand2HasDecimalValue || isDivisionOperation) {
 			
 			// Parsing Values
 			double numericOperand1 = Double.parseDouble(operand1);
@@ -203,7 +204,7 @@ public class CalculatorModel {
 			double result = Math.round(handleOperation.operation(numericOperand1, numericOperand2).doubleValue() * 100.0)/100.0;
 			
 			// Final result
-			return String.valueOf(result);
+			return (isDivisionOperation && result == Math.round(result)) ? String.valueOf((long)result) : String.valueOf(result);
 		}
 
 		// Parsing Values
@@ -282,7 +283,7 @@ public class CalculatorModel {
 				default -> new InvaildOperatorException();
 			}
 			
-			String result = this.executeOperation(operation);	// evaluating high precedence operators
+			String result = this.executeOperation(operation, operator.equals("/"));	// evaluating high precedence operators
 			
 			this.values.push(result);							// pushing evaluated result back into stack
 		}
@@ -302,7 +303,7 @@ public class CalculatorModel {
 			}
 			
 			// Evaluate and pushing values
-			String result = this.executeOperation(operation);
+			String result = this.executeOperation(operation, false);
 			this.values.push(result);
 		}
 		
