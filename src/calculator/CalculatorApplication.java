@@ -25,8 +25,9 @@ public class CalculatorApplication {
 
 	/**
 	 * This the driver program that initializes the application.
-	 *
-	 * @param args
+	 * A simple main method to get the whole application.
+	 * 
+	 * @param args: a String array object.
 	 */
 	public static void main(String[] args) {
 

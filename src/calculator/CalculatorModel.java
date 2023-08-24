@@ -14,9 +14,8 @@ import java.util.regex.Pattern;
  * Created for designing custom lambda function for different Arithmetic Operation.
  *
  * @author Shamith Nakka
- * @see CalculatorModel::executeOperation()
+ * For more details, see {@link CalculatorModel#executeOperation()}.
  *
- * @throws ArithmeticException
  */
 @FunctionalInterface
 interface ArithmeticOperation {
@@ -42,7 +41,7 @@ interface ArithmeticOperation {
  */
 public class CalculatorModel {
 
-	// Private members
+	// Collection to store and evaluate expressions.
 	final private List<String> expression;
 	final private Stack<String> operations;
 	final private Stack<String> values;
@@ -63,8 +62,7 @@ public class CalculatorModel {
 	 * This method removes the last character of the String value for the given StringBuilder.
 	 *
 	 * @param input : a StringBuilder object containing data for the text field.
-	 *
-	 * @return void
+	 * 
 	 */
 	private static void backspaceTextFeild(final StringBuilder input) {
 		if(input.length() != 0) {
@@ -132,8 +130,7 @@ public class CalculatorModel {
 	 * This method negates the value of given StringBuilder.
 	 *
 	 * @param input : a StringBuilder object containing data for the text field
-	 *
-	 * @return void
+	 * 
 	 */
 	private static void negateInputString(final StringBuilder input) {
 
@@ -155,7 +152,6 @@ public class CalculatorModel {
 	 * @param stringBuilder : Given StringBuidler object.
 	 * @param stringValue : String value needed to be replaced.
 	 *
-	 * @return void
 	 */
 	public static void replaceStringBuilderValue(final StringBuilder stringBuilder, final String stringValue) {
 		stringBuilder.replace(0, stringBuilder.length(), stringValue);
@@ -167,7 +163,6 @@ public class CalculatorModel {
 	 * @param inputSB : a StringBuilder object containing data for the text field.
 	 * @param forTextField : boolean value that represents the origins of the method call.
 	 *
-	 * @return void
 	 */
 	private void clearTextFeild(final StringBuilder inputSB,final boolean forTextField) {
 		if(inputSB.length() != 0)
@@ -180,12 +175,10 @@ public class CalculatorModel {
 	 * This method handles the operation based on the precedence.
 	 *
 	 * @param operator : a String value representing operator.
-	 * @param isHighPrecedence : a boolean value to determine level of precedence
+	 * @param isHighPrecedence : a boolean value to determine level of precedence.
 	 *
-	 * @return void
-	 *
-	 * @throws InvaildOperatorException
-	 * @throws ArithmeticException
+	 * @throws InvaildOperatorException If any other option is selected that the one defined.
+	 * @throws ArithmeticException To handle the "Division by zero" case.
 	 */
 	private void handleOperationsBasedOnPrecedence(final String operator, final boolean isHighPrecedence)  throws InvaildOperatorException, ArithmeticException {
 
@@ -221,10 +214,8 @@ public class CalculatorModel {
 	 *
 	 * @param inputStringBuilder : a string builder object representing TextField object.
 	 *
-	 * @return void
-	 *
-	 * @throws InvaildOperatorExceptions
-	 * @throws ArithmeticException
+	 * @throws InvaildOperatorException If any other option is selected that the one defined.
+	 * @throws ArithmeticException To handle the "Division by zero" case.
 	 */
 	private void evaluateExpression(final StringBuilder inputStringBuilder) throws InvaildOperatorException, ArithmeticException {
 
@@ -280,7 +271,7 @@ public class CalculatorModel {
 	 *
 	 * @return value : a String value representing the end result of the operation.
 	 *
-	 * @throws ArithmeticException
+	 * @throws ArithmeticException To handle the "Division by zero" case.
 	 */
 	private String executeOperation(final ArithmeticOperation handleOperation, final boolean isDivisionOperation) throws ArithmeticException {
 
@@ -328,10 +319,8 @@ public class CalculatorModel {
 	 * @param operationName : Defines the type of operation.
 	 * @param argumentString : User Input data.
 	 *
-	 * @return void
-	 *
-	 * @throws InvaildOperatorException
-	 * @throws ArithmeticException
+	 * @throws InvaildOperatorException If any other option is selected that the one defined.
+	 * @throws ArithmeticException To handle the "Division by zero" case.
 	 */
 	public void handleOperation(final String operationName, final StringBuilder argumentStringBuilder) throws InvaildOperatorException, ArithmeticException {
 		if(argumentStringBuilder.length() == 0)		return;
@@ -352,8 +341,6 @@ public class CalculatorModel {
 	/**
 	 * This method returns true when the evaluated value is displayed or not.
 	 *
-	 * @param Not Required.
-	 *
 	 * @return hasDisplayedResult : returns true to denote the evaluated result has been displayed.
 	 */
 	public boolean hasDisplayedResult() {
@@ -373,7 +360,6 @@ public class CalculatorModel {
 	 * @param inputStringBuilder : StringBuilder object of TextFeild
 	 * @param operator : String value of Operator.
 	 *
-	 * @return void
 	 */
 	private void selecteArithmeticdOperation(final StringBuilder inputStringBuilder, final String operator) {
 
@@ -393,7 +379,7 @@ public class CalculatorModel {
  * Created for handling the unexpected operationName value.
  *
  * @author Shamith Nakka
- * @see CalculatorModel::handleOperation()
+ * For more details, see {@link CalculatorModel#handleOperation()}
  *
  */
 @SuppressWarnings("serial")

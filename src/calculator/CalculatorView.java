@@ -26,7 +26,7 @@ import java.awt.Toolkit;
 @SuppressWarnings("serial")
 public class CalculatorView extends Frame implements Keypad {
 
-	// Member declarations
+	// GUI-related member objects.
 	private final Font globalFont;
 	private final Image icon;
 	protected final Panel keypad;
@@ -76,8 +76,6 @@ public class CalculatorView extends Frame implements Keypad {
 	 * @param weighty : weight value of y-coordinate on grid.
 	 * @param padding : array of padding value (Top, Left, Bottom, Right).
 	 *
-	 * @return void
-	 *
 	 */
 	private void addComponentsToView(final Component component, final int gridx, final int gridy,  final int weightx, final int weighty, final int... padding) {
 
@@ -110,9 +108,7 @@ public class CalculatorView extends Frame implements Keypad {
 	}
 
 	/**
-	 * Returns the absolute path to icon
-	 *
-	 * @param Not Required.
+	 * Returns the absolute path to icon.
 	 *
 	 * @return absolutePathToIcon[String]
 	 */
@@ -125,8 +121,6 @@ public class CalculatorView extends Frame implements Keypad {
 	/**
 	 * This function returns a java.awt.Panel object that contains
 	 * all the buttons required for a simple calculator.
-	 *
-	 * @param Not Required.
 	 *
 	 * @return keypad[java.awt.Panel] : Panel object.
 	 *
@@ -178,8 +172,6 @@ interface Keypad {
 	/**
 	 * This function returns a java.awt.Panel object that contains
 	 * all the buttons required.
-	 *
-	 * @param Not Required.
 	 *
 	 * @return keypad[java.awt.Panel] : Panel object.
 	 *

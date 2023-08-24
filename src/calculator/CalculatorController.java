@@ -36,6 +36,10 @@ public class CalculatorController implements TextListener, ActionListener{
 	/**
 	 * Constructs a new CalculatorModel instance.
 	 * This constructor initializes with provided data or resources.
+	 * 
+	 * @param view : a CalculatorView instance.
+	 * @param model: a CalculatorModel instance.
+	 * 
 	 */
 	public CalculatorController(final CalculatorView view, final CalculatorModel model){
 
