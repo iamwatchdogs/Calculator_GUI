@@ -53,12 +53,12 @@ Just make sure you're comfortable with the following concepts before you start c
 
 - **\*Git & GitHub**: At least know how to view issues and make pull requests.
 - **\*Core Java**:
-  - \*Object-oriented Programming (Including Abstract Classes, Interfaces)
-  - \*Java AWT
+  - **Object-oriented Programming** _(Including Abstract Classes, Interfaces)_
+  - **Java AWT**
   - Event Handling
   - Exception Handling
-  - \*Java Docs
-  - \*Documenting your code
+  - **Java Docs**
+  - **Documenting your code**
 - Any other Concept that you want to integrate with the project.
 
 If you're a beginner or don't want to contribute code-wise, then you can help me in other ways mentioned above.
