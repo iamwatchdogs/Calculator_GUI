@@ -105,7 +105,7 @@ And after all of this process, You'll make a [**Pull request**](https://github.c
 
 I hope this gave you an idea about how you can get started by contributing to an Open-Source Repository such as this mini-project. Have fun contributing !!!...
 
-## Important Rules
+## Important-Rules
 
 - Please try to keep the code as clean as possible.
 - Follow the file structure and coding style of the project.

@@ -87,6 +87,7 @@ git push origin <branch-name>
 ```
 
 After you're done with your changes, you can push them back to your remote repository. So that you can send me a pull request to merge the changes into the original Repository.
+And I highly suggest each and every contributor to checkout the [Important-Rules](CONTRIBUTING.md#important-rules "Goto Important Rules in CONTRIBUTING.md") mentioned in [CONTRIBUTING.md](CONTRIBUTING.md "Goto CONTRIBUTING.md").
 
 > Don't know where to start ???... (or) Sounds too Complicated ???... Check out [CONTRIBUTING.md](CONTRIBUTING.md "Let's go to CONTRIBUTING.md").
 
