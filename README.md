@@ -94,6 +94,6 @@ After you're done with your changes, you can push them back to your remote repos
 
 <div align="center">
 
-![Output](./src/images/OP.png "Goto OP.png")
+![Output](src/calculator/images/OP.png "Goto OP.png")
 
 </div>
