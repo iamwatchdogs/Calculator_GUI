@@ -1,4 +1,4 @@
-# Calculator_GUI <img src="https://github.com/iamwatchdogs/Calculator_GUI/actions/workflows/pages/pages-build-deployment/badge.svg" alt="" align="right">
+# Calculator_GUI <img src="https://github.com/iamwatchdogs/Calculator_GUI/actions/workflows/pages/pages-build-deployment/badge.svg" alt="Java Docs deployment status" align="right"><img src="https://github.com/iamwatchdogs/Calculator_GUI/actions/workflows/code-linter.yml/badge.svg" alt="Java Code linter Status" align="right">
 
 <br>
 <div align="center">
