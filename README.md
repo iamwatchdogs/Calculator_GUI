@@ -38,24 +38,27 @@ I have spent quite a while on this small project trying to learn, understand and
 
 Hi, there fellow developer !!!... I'm happy to see you eager to contribute to this repo/project in any way possible. Before you proceed with any kind of contribution, please set up your project within your local system and it is suggested to use **Eclipse IDE** as this project was developed using the very same IDE. After setting it up within your system, go on and try out stuff...
 
-Found a bug ???... Report it by creating an issue right in the issue section.
+> Found a bug ???... Report it by creating an issue right in the issue section.
 
-Got an idea to improve ???... Create an issue suggesting your idea.
+> Got an idea to improve ???... Create an issue suggesting your idea.
 
-want to work on any of the issues you have created or found in the issue section ???... Ping me within the same chat which you want to work on, and I'll assign you the issue so that others might know that you're working on the issue. When you are done create a Pull Request, so that I can review & merge it and also close the issue.
+> want to work on any of the issues you have created or found in the issue section ???...
+>
+> > Ping me within the same chat which you want to work on, and I'll assign you the issue so that others might know that you're working on the issue.
+> > When you are done create a Pull Request, so that I can review & merge it and also close the issue.
 
 ### Prerequisites
 
 Just make sure you're comfortable with the following concepts before you start code-wise contribution:
 
-- **Git & GitHub**: At least know how to view issues and make pull requests.
-- **Core Java**:
-  - *Object-oriented Programming (Including Abstract Classes, Interfaces)
-  - *Java AWT
+- **\*Git & GitHub**: At least know how to view issues and make pull requests.
+- **\*Core Java**:
+  - \*Object-oriented Programming (Including Abstract Classes, Interfaces)
+  - \*Java AWT
   - Event Handling
   - Exception Handling
-  - *Java Docs
-  - *Documenting your code
+  - \*Java Docs
+  - \*Documenting your code
 - Any other Concept that you want to integrate with the project.
 
 If you're a beginner or don't want to contribute code-wise, then you can help me in other ways mentioned above.
@@ -91,6 +94,6 @@ After you're done with your changes, you can push them back to your remote repos
 
 <div align="center">
 
-![Output](src/images/OP.png)
+![Output](./src/images/OP.png "Goto OP.png")
 
 </div>
