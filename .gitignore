@@ -1,3 +1,6 @@
+# Eclipse IDE default
+/bin/
+
 # Compiled class file
 *.class
 
