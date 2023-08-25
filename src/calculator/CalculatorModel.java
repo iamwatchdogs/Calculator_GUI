@@ -284,7 +284,7 @@ public class CalculatorModel {
 		final boolean operand2HasDecimalValue = isNumericValue(operand2, true);
 
 		// Checking for zero division exception
-		if(matchesRegex("^0*(\\.?0*)?$",operand2)) {
+		if(isDivisionOperation && matchesRegex("^0*(\\.?0*)?$",operand2)) {
 			throw new ArithmeticException("Divide by zero");
 		}
 
