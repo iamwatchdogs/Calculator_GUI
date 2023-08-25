@@ -2,12 +2,9 @@ name: Java File Lint
 
 on:
   push:
-    paths:
-      - '**.java'
-  pull_request:
-    paths:
-      - '**.java'
-
+    branches:
+    - main
+    
 jobs:
   lint:
     runs-on: ubuntu-latest
