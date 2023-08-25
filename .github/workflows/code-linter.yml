@@ -1,0 +1,33 @@
+name: Java File Lint
+
+on:
+  push:
+    paths:
+      - '**.java'
+  pull_request:
+    paths:
+      - '**.java'
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v3.5.3
+
+      - name: Set up Java
+        uses: actions/setup-java@v1.4.4
+        with:
+          java-version: '17'
+
+      - name: Run
+        uses: iwata-n/actions-checkstyle@v1.0.0
+        with:
+          result: result.xml
+          
+      - name: Archive
+        uses: actions/upload-artifact@v2
+        with:
+          name: result
+          path: result.xml
