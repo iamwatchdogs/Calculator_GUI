@@ -2,8 +2,11 @@ name: Java File Lint
 
 on:
   push:
-    branches:
-    - main
+    paths:
+      - '**.java'
+  pull_request:
+    paths:
+      - '**.java'
     
 jobs:
   lint:
